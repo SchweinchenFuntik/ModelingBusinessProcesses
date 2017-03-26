@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <BorderPane>
+        <left><Label text="%dialog.CreateProject.name"/></left>
+        <right><TextField/></right>
+    </BorderPane>
+       
+    <RadioButton mnemonicParsing="false" selected="true" text="#getName">
+        <toggleGroup><ToggleGroup fx:id="rgGp1"/></toggleGroup>
+    </RadioButton>
+    <RadioButton mnemonicParsing="false" text="RadioButton" toggleGroup="$rgGp1" />
+    <RadioButton mnemonicParsing="false" text="RadioButton" toggleGroup="$rgGp1" />
+    
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</VBox>

@@ -1,0 +1,25 @@
+/* 
+    Created on : 07.01.2017, 6:52:04
+    Author     : funtik
+*/
+
+.rectangle {
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-padding: 5;
+}
+
+.slider_zoom{
+    -fx-background-color: -fx-focus-color;
+}
+
+.rectangle:hover{
+    -fx-border-color: green;
+}
+
+.arrow_point{
+    -fx-border-color: black;
+    -fx-border-width: 1;
+}
+.arrow_point:hover{
+}

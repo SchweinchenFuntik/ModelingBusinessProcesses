@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml/1" 
+          fx:controller="com.funtik.mbp.controller.CreateDiagram">
+    
+    <Label text="" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+    <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+    
+    
+</GridPane>

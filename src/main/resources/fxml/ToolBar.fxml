@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.text.NumberFormat?>
+<?import java.math.BigDecimal?>
+<?import jfxtras.labs.scene.control.BigDecimalField?>
+<?import jfxtras.labs.scene.control.Magnifier?>
+<?import com.funtik.mbp.gui.*?>
+<?import org.controlsfx.control.RangeSlider?>
+
+<FlowPane xmlns:fx="http://javafx.com/fxml/1" fx:id="tool"
+          fx:controller="com.funtik.mbp.controller.ToolBar">
+    
+    <ToolBar fx:id="barPrimitive">
+        <ToggleButton fx:id="def"/>
+        <ToggleButton fx:id="arrow"/>
+        <ToggleButton fx:id="rectengle"/>
+        <ToggleButton text="def"/>
+    </ToolBar>
+    
+    <Separator  orientation="VERTICAL"/>
+    
+    <ToolBar>
+        <Label text="%tool_bar.zoom" />
+        <ProgressSlider fx:id="z" min="10" max="300" value="100"/>
+        <BigDecimalField fx:id="zoom" number="1" stepwidth="0.1" 
+                         minValue="0.1" maxValue="3" prefWidth="75">
+            <format> <NumberFormat fx:factory="getPercentInstance"/> </format>
+        </BigDecimalField>
+    </ToolBar>
+    
+    <Button  fx:id="memory" text="Memory Scan"/>
+    
+</FlowPane>

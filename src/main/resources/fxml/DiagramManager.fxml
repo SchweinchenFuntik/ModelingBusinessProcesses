@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.controlsfx.tools.*?>
+
+<BorderPane fx:id="manager"
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.funtik.mbp.controller.DiagramMeneger">
+    <fx:define>
+        <ToggleGroup fx:id="rgGp1"/>
+        <VBox fx:id="left" spacing="5">
+            <RadioButton mnemonicParsing="false" toggleGroup="$rgGp1" 
+                         text="%dialog.DiagramManager.context" selected="true"/>
+            <RadioButton mnemonicParsing="false" toggleGroup="$rgGp1" 
+                         text="%dialog.DiagramManager.decomposition"/>
+            <RadioButton mnemonicParsing="false" toggleGroup="$rgGp1" 
+                         text="%dialog.DiagramManager.swim_lane"/>
+            <RadioButton mnemonicParsing="false" toggleGroup="$rgGp1" 
+                         text="%dialog.DiagramManager.organization_chart"/>
+            <RadioButton mnemonicParsing="false" toggleGroup="$rgGp1" 
+                         text="%dialog.DiagramManager.node_tree"/>
+            <RadioButton mnemonicParsing="false" toggleGroup="$rgGp1" 
+                         text="%dialog.DiagramManager.feo"/>
+            <RadioButton mnemonicParsing="false" toggleGroup="$rgGp1" 
+                         text="%dialog.DiagramManager.idef3"/>
+        </VBox>
+    </fx:define>
+    
+    <top>
+        <HBox spacing="10"> 
+            <Label text="%dialog.DiagramManager.model"/>  
+            <ComboBox fx:id="model" prefWidth="200"/> 
+        </HBox>
+    </top>
+    
+    <center>
+        <ListView fx:id="listDiagram"/>
+    </center>
+    
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+    
+</BorderPane>
