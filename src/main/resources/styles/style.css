@@ -23,3 +23,7 @@
 }
 .arrow_point:hover{
 }
+
+.pointEl{
+    -fx-background-color: -fx-focus-color;
+}

@@ -9,6 +9,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.funtik.mbp.controller.GUI">
-    <top> <fx:include source="Menu.fxml"/> </top>
+    <top> <fx:include source="Menu.fxml" fx:id="menu"/> </top>
+
 
 </BorderPane>

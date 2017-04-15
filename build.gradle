@@ -16,8 +16,8 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '21.0'
     compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.12'
     compile group: 'org.jfxtras', name: 'jfxtras-labs', version: '8.0-r5'
-    compile group:  'org.jfxtras', name: 'jfxtras-menu', version: '8.0-r5'
-    compile group:  'org.jfxtras', name: 'jfxtras-window', version: '8.0-r5'
+    compile group: 'org.jfxtras', name: 'jfxtras-menu', version: '8.0-r5'
+    compile group: 'org.jfxtras', name: 'jfxtras-window', version: '8.0-r5'
 }
 
 jar{

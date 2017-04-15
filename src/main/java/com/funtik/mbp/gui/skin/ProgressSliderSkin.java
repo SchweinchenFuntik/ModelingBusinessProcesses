@@ -18,8 +18,6 @@ public class ProgressSliderSkin extends SliderSkin{
     public ProgressSliderSkin(ProgressSlider slider) {
         super(slider);
         val = new ClassRef(this);
-        val.addField("trackStart");
-        val.addField("trackLength");
         val.addField("thumb");
         val.addField("track");
         s = slider;

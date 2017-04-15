@@ -13,12 +13,6 @@ import javafx.scene.input.MouseEvent;
 public interface EventMouse<Obj> extends Event<Obj>{
     public enum Type{CLICK, DRAGGED, PRESSED, RELEASSED, ENTERED, EXITED}
     
-    //????
-    public static final int CLICK       = 0x1000, 
-                            DRAGGED     = 0x0100, 
-                            PRESSED     = 0x0010, 
-                            RELEASSED   = 0x0001;
-    
     public default void click(MouseEvent e){}
     /**
      * Когда мышка нажата и находися над обектом
