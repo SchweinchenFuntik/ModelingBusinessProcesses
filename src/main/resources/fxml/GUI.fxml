@@ -11,5 +11,4 @@
             fx:controller="com.funtik.mbp.controller.GUI">
     <top> <fx:include source="Menu.fxml" fx:id="menu"/> </top>
 
-
 </BorderPane>

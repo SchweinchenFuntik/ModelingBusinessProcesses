@@ -2,6 +2,13 @@
     Created on : 07.01.2017, 6:52:04
     Author     : funtik
 */
+.slider_zoom{
+    -fx-background-color: -fx-focus-color;
+}
+
+.border {
+    -fx-border-color: black;
+}
 
 .rectangle {
     -fx-border-color: black;
@@ -9,21 +16,38 @@
     -fx-padding: 5;
 }
 
-.slider_zoom{
-    -fx-background-color: -fx-focus-color;
-}
-
 .rectangle:hover{
     -fx-border-color: green;
 }
+
+.rectangle .cell-rectangle{}
 
 .arrow_point{
     -fx-border-color: black;
     -fx-border-width: 1;
 }
-.arrow_point:hover{
+
+.cell-rectangle .text-area:focused .content {
+    -fx-background-color:
+        -fx-control-inner-background,
+        -fx-faint-focus-color,
+        -fx-background;
 }
 
-.pointEl{
-    -fx-background-color: -fx-focus-color;
+.cell-rectangle .text-area .content {
+    -fx-background-color:
+        -fx-control-inner-background,
+        -fx-faint-focus-color,
+        -fx-background;
 }
+
+.cell-rectangle .text-area .scroll-bar:vertical:disabled {
+    -fx-opacity: 0;
+}
+
+.t{
+    -fx-background-color: black;
+    -fx-border-color: black;
+    -fx-border-width: 1
+}
+

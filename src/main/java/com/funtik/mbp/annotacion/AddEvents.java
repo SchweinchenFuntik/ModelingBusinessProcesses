@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 /**
  *
  * @author funtik
+ * подумать нужен ли
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
