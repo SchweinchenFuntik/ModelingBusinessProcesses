@@ -6,10 +6,6 @@
     -fx-background-color: -fx-focus-color;
 }
 
-.border {
-    -fx-border-color: black;
-}
-
 .rectangle {
     -fx-border-color: black;
     -fx-border-width: 2;
@@ -20,7 +16,18 @@
     -fx-border-color: green;
 }
 
-.rectangle .cell-rectangle{}
+.pointLeftTop:hover{
+    -fx-cursor: nw-resize;
+}
+.pointLeftDown:hover{
+    -fx-cursor: sw-resize;
+}
+.pointRightTop:hover{
+    -fx-cursor: ne-resize;
+}
+.pointRightDown:hover{
+    -fx-cursor: se-resize;
+}
 
 .arrow_point{
     -fx-border-color: black;
@@ -43,6 +50,15 @@
 
 .cell-rectangle .text-area .scroll-bar:vertical:disabled {
     -fx-opacity: 0;
+}
+
+
+
+
+
+
+.border {
+    -fx-border-color: black;
 }
 
 .t{

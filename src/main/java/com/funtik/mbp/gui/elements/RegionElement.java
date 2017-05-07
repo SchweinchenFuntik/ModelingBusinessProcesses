@@ -1,5 +1,6 @@
-package com.funtik.mbp.gui.primitives;
+package com.funtik.mbp.gui.elements;
 
+import com.funtik.mbp.elements.Element;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.layout.Region;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Created by funtik on 20.04.17.
  */
-public class RegionElement extends Region implements Element<Region, ContextMenu>{
+public class RegionElement extends Region implements Element<Region, ContextMenu> {
 
     public RegionElement(double x, double y, double width, double height, List childs){
         init(x, y, width, height, childs);

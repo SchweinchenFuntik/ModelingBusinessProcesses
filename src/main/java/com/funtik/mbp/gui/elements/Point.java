@@ -1,5 +1,8 @@
-package com.funtik.mbp.gui.primitives;
+package com.funtik.mbp.gui.elements;
 
+import com.funtik.mbp.elements.ConnectPoint;
+import com.funtik.mbp.elements.Element;
+import com.funtik.mbp.util.ChecksMinDoubleProperty;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.DoubleProperty;
@@ -8,7 +11,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
 
@@ -22,8 +24,8 @@ public class Point extends StackPane implements Element, ConnectPoint {
 
     protected SimpleObjectProperty<Shape> shape;
     protected static SimpleDoubleProperty szToCenter = new SimpleDoubleProperty(4);
-    private SimpleDoubleProperty xCenter;
-    private SimpleDoubleProperty yCenter;
+    private ChecksMinDoubleProperty xCenter;
+    private ChecksMinDoubleProperty yCenter;
 
     public Point(double x, double y, Shape s, boolean isDefBind){
         init(x, y, s, isDefBind);
@@ -51,19 +53,27 @@ public class Point extends StackPane implements Element, ConnectPoint {
                 ((Rectangle) s).widthProperty().bind(nb);
             }
         }
-        shape = s!=null ? new SimpleObjectProperty<>(s):new SimpleObjectProperty<>();
-        xCenter = new SimpleDoubleProperty(x + szToCenter.get());
-        yCenter = new SimpleDoubleProperty(y + szToCenter.get());
+        shape = s!=null ? new SimpleObjectProperty<>(s):new SimpleObjectProperty<>(new Circle());
+        xCenter = new ChecksMinDoubleProperty(x + szToCenter.get());
+        yCenter = new ChecksMinDoubleProperty(y + szToCenter.get());
         szToCenter.addListener((observable, ov, nv) -> {
             double sz = nv.doubleValue() - ov.doubleValue();
             if(sz==0) return;
             xCenter.set(xCenter.get()+sz);
             yCenter.set(yCenter.get()+sz);
         });
-        xCenter.addListener((observable, ov, nv) -> setLayoutX(nv.doubleValue() - szToCenter.get()));
-        yCenter.addListener((observable, ov, nv) -> setLayoutY(nv.doubleValue() - szToCenter.get()));
-        layoutXProperty().addListener((observable, ov, nv) -> xCenter.setValue(nv.doubleValue() + szToCenter.get()));
-        layoutYProperty().addListener((observable, ov, nv) -> yCenter.setValue(nv.doubleValue() + szToCenter.get()));
+        xCenter.addListener((observable, ov, nv) -> {
+            double sz = nv.doubleValue() - ov.doubleValue();
+            if(sz==0) return;
+            setLayoutX(nv.doubleValue() - szToCenter.get());
+        });
+        yCenter.addListener((observable, ov, nv) -> {
+            double sz = nv.doubleValue() - ov.doubleValue();
+            if(sz==0) return;
+            setLayoutY(nv.doubleValue() - szToCenter.get());
+        });
+
+
         setLayoutX(x); setLayoutY(y);
         shape.addListener((observable, ov, nv) -> {
             if(ov.equals(nv)) return;
@@ -73,8 +83,13 @@ public class Point extends StackPane implements Element, ConnectPoint {
         getStyleClass().add("point");
         getChildren().add(shape.get());
     }
+
     public void setPointShape(Shape s){
         shape.setValue(s);
+    }
+
+    public Shape getPointShape(){
+        return shape.get();
     }
 
     public static void setSizePoint(double size){
@@ -91,12 +106,12 @@ public class Point extends StackPane implements Element, ConnectPoint {
     }
 
     @Override
-    public DoubleProperty getX() {
+    public ChecksMinDoubleProperty getX() {
         return xCenter;
     }
 
     @Override
-    public DoubleProperty getY() {
+    public ChecksMinDoubleProperty getY() {
         return yCenter;
     }
 
@@ -111,4 +126,26 @@ public class Point extends StackPane implements Element, ConnectPoint {
 
     @Override
     public void focusNot() {}
+
+    @Override
+    public void setElementX(double x) {
+        double sz = szToCenter.get();
+        xCenter.set(x+sz);
+    }
+
+    @Override
+    public void setElementY(double y) {
+        double sz = szToCenter.get();
+        yCenter.set(y+sz);
+    }
+
+    @Override
+    public double getElementX() {
+        return layoutXProperty().get();
+    }
+
+    @Override
+    public double getElementY() {
+        return layoutYProperty().get();
+    }
 }

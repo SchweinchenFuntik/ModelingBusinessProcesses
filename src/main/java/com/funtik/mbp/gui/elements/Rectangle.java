@@ -1,5 +1,6 @@
-package com.funtik.mbp.gui.primitives;
+package com.funtik.mbp.gui.elements;
 
+import com.funtik.mbp.elements.Element;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.event.EventHandler;
@@ -13,32 +14,39 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  * Created by funtik on 06.04.17.
  */
+// Region and layoutBounds поробывать
+// написать что бы Anchor проходил по своим елеентам и вычислялль width and height
 public class Rectangle extends Group implements Element {
-    private static String baseText = "Rectangle";
+    private static final String baseText = "Rectangle";
     private static int ID = 0;
 
     private double x, y; // не тут
 
-    private Label text;
+    private Text text;
     private TextArea readerText;
 
-    private VBox        pane        = new VBox();
+    private StackPane   pane        = new StackPane();
     private Point       pLeftTop    = new Point(),
                         pLeftDown   = new Point(),
                         pRightTop   = new Point(),
                         pRightDown  = new Point();
 
+    AnchorPane a = new AnchorPane();
+
     //// не тут
     EventHandler<MouseEvent> eC = e ->{
-        Point p = (Point) e.getSource();
-        p.setLayoutX(p.getLayoutX()+e.getX()-x);
-        p.setLayoutY(p.getLayoutY()+e.getY()-y);
+        //Point p = (Point) e.getSource();
+        //p.getX().set(p.getLayoutX()+e.getX());
+        //p.getY().set(p.getLayoutY()+e.getY());
+        pane.setLayoutX(pane.getLayoutX()+e.getX()-x);
+        pane.setLayoutY(pane.getLayoutY()+e.getY()-y);
     };
     EventHandler<MouseEvent> eP = e ->{
         x = e.getX(); y = e.getY();
@@ -46,22 +54,19 @@ public class Rectangle extends Group implements Element {
 
     public Rectangle(){
         pane.setPadding(new Insets(5));
-        pane.setSpacing(3);
         pane.getStyleClass().add("rectangle");
 
-        //rect.getStyleClass().add("rectangle");
+        //pLeftTop.setVisible(false); pLeftDown.setVisible(false);
+        //pRightTop.setVisible(false); pRightDown.setVisible(false);
 
-        text = new Label();
+        text = new Text();
         readerText = new TextArea(baseText+" "+ID++);
         readerText.setVisible(false);
         readerText.setWrapText(true);
         text.textProperty().bind(readerText.textProperty());
-        text.minHeightProperty().bind(text.heightProperty());
 
-        text.addEventFilter(MouseEvent.MOUSE_CLICKED, e ->{
-            System.out.println(text.getHeight());
+        addEventFilter(MouseEvent.MOUSE_CLICKED, e ->{
             if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()>=2){
-                //readerText.setMaxSize(text.getWidth()+4, text.getHeight()+2);
                 readerText.setVisible(true);
             }
         });
@@ -91,18 +96,53 @@ public class Rectangle extends Group implements Element {
 
         NumberBinding bindHeight = Bindings.subtract(pLeftDown.getY(), pLeftTop.getY());
         NumberBinding bindWidth = Bindings.subtract(pRightTop.getX(), pLeftTop.getX());
-        pane.layoutXProperty().bind(pLeftTop.getX());
+        pane.translateXProperty().bind(pLeftTop.getX());
         pane.layoutYProperty().bind(pLeftTop.getY());
+
         pane.prefHeightProperty().bind(bindHeight);
         pane.prefWidthProperty().bind(bindWidth);
 
         StackPane paneText = new StackPane(text, readerText);
-        StackPane.setAlignment(text, Pos.CENTER);
         paneText.getStyleClass().add("cell-rectangle");
 
-        pane.getChildren().addAll(paneText, new Button("asd"));
+        pLeftTop.getStyleClass().add("pointLeftTop");
+        pLeftDown.getStyleClass().add("pointLeftDown");
+        pRightTop.getStyleClass().add("pointRightTop");
+        pRightDown.getStyleClass().add("pointRightDown");
+
+        Button bt = new Button("Bt");
+        Label lb = new Label("Label");
+
+        bt.setOnAction(e -> System.out.println("Bt"));
+
+        text.getLayoutBounds();// поробывать это
+        NumberBinding bindMinWidth = Bindings.add(pLeftTop.getX(), text.getLayoutBounds().getWidth()+12);
+        NumberBinding bindMinHeight = Bindings.add(pLeftTop.getY(), text.getLayoutBounds().getHeight()+12);
+       // pRightTop.getX().minProperty().bind(bindMinWidth);
+       // pRightDown.getX().minProperty().bind(bindMinWidth);
+        //pRightDown.getY().minProperty().bind(bindMinHeight);
+        //pLeftDown.getY().minProperty().bind(bindMinHeight);
+
+        AnchorPane.setBottomAnchor(bt, 0.0);
+        AnchorPane.setBottomAnchor(lb, 0.0);
+        AnchorPane.setLeftAnchor(bt, 10.0);
+        AnchorPane.setRightAnchor(lb, 10.0);
+        a.getChildren().addAll(bt, lb);
+
+        StackPane.setAlignment(text, Pos.TOP_CENTER);
+        pane.getChildren().addAll( paneText, a);
 
         getChildren().addAll(pane, pLeftTop, pLeftDown, pRightTop, pRightDown);
+    }
+
+    @Override
+    public void setElementX(double x) {
+        pLeftTop.getX().set(x);
+    }
+
+    @Override
+    public void setElementY(double y) {
+        pLeftTop.getY().set(y);
     }
 
     @Override
@@ -123,5 +163,11 @@ public class Rectangle extends Group implements Element {
     @Override
     public double getElementWidth() {
         return pRightTop.getX().getValue() - pLeftTop.getX().getValue();
+    }
+
+    @Override
+    public void focus() {
+        pLeftTop.setVisible(true); pLeftDown.setVisible(true);
+        pRightTop.setVisible(true); pRightDown.setVisible(true);
     }
 }

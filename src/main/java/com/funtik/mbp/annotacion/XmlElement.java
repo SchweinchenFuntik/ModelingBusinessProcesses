@@ -6,12 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
- * @author funtik
- * подумать нужен ли
+ * Created by funtik on 08.05.17.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface AddEvents {
-    public AddEvent[] value();
+@Target({ElementType.FIELD, ElementType.METHOD})
+public @interface XmlElement {
 }

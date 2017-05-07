@@ -1,7 +1,4 @@
-package com.funtik.mbp.gui.primitives;
-
-import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
+package com.funtik.mbp.elements;
 
 /**
  * Created by funtik on 02.04.17.

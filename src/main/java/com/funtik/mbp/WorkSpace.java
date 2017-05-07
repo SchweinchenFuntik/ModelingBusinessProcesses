@@ -1,6 +1,6 @@
 package com.funtik.mbp;
 
-import com.funtik.mbp.gui.primitives.Element;
+import com.funtik.mbp.elements.Element;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

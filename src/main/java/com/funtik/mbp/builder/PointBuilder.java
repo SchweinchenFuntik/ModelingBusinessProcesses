@@ -1,6 +1,6 @@
 package com.funtik.mbp.builder;
 
-import com.funtik.mbp.gui.primitives.Point;
+import com.funtik.mbp.gui.elements.Point;
 import com.funtik.mbp.util.functions.Func;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;

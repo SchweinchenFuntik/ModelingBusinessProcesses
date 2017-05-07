@@ -1,9 +1,7 @@
 package com.funtik.mbp.event;
 
-import com.funtik.mbp.gui.primitives.Element;
-import com.funtik.mbp.gui.primitives.Point;
+import com.funtik.mbp.elements.Element;
 import javafx.scene.Node;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
