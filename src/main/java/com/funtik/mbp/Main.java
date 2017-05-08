@@ -37,6 +37,13 @@ public class Main extends Application {
 
     private Parent t(){
         Pane pane = new Pane();
+
+        TextElement tx = new TextElement("ASDFSD\nZXCVXZ");
+        tx.setLayoutX(100); tx.setLayoutY(100);
+        tx.setOnMouseClicked(e -> tx.getConnectPoint(e.getX(), e.getY()));
+
+        pane.getChildren().addAll(tx);
+
         return pane;
     }
 

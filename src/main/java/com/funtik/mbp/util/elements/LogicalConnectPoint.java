@@ -35,4 +35,9 @@ public class LogicalConnectPoint implements ConnectPoint {
     public void setFuncLogic(Function<LogicalConnectPoint, Boolean> func) {
         this.funcLogic = func;
     }
+
+    @Override
+    public String toString() {
+        return "x = "+x.get()+"\ty = "+y.get();
+    }
 }
