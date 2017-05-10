@@ -21,6 +21,7 @@ public abstract class BaseLineElement extends RegionElement {
     private EnumSet<Direction> directions;
     private Rotate rotate;
     private Line line = null;
+    public Point beg, end;
     private DoubleProperty begX, begY, endX, endY;
 
     public BaseLineElement(){
@@ -34,23 +35,26 @@ public abstract class BaseLineElement extends RegionElement {
     private void init(double begX, double begY, double endX, double endY){
         this.line       = new Line();
         this.rotate     = new Rotate();
-        this.begX       = new SimpleDoubleProperty();
-        this.begY       = new SimpleDoubleProperty();
-        this.endX       = new SimpleDoubleProperty();
-        this.endY       = new SimpleDoubleProperty();
+        this.beg        = new Point();
+        this.end        = new Point();
+        this.begX       = beg.getX();
+        this.begY       = beg.getY();
+        this.endX       = end.getX();
+        this.endY       = end.getY();
         prefWidthProperty().bind(widthLineRegion);
         line.layoutXProperty().bind(Bindings
                 .divide(widthLineRegion, 2));
 
         getTransforms().add(rotate);
-        setLayoutY(begY);
+        setElementY(begY);
         line.endYProperty().bind(Bindings.subtract(heightProperty(), 2));
         line.strokeWidthProperty().bind(widthLine);
         rotate.pivotXProperty().bind(Bindings.divide(widthProperty(), 2));
         layoutXProperty().bind(Bindings.subtract(this.begX, rotate.pivotXProperty()));
 
-        if(isNotUpdate(begX, begY, endX, endY)) updateLine(begX, begY, endX, endY);
-        getChildren().add(line);
+        if(!isNotUpdate(begX, begY, endX, endY)) updateLine(begX, begY, endX, endY);
+        getChildren().addAll(line);
+        // beg and end add na WorkPane
     }
 
     private void updateLine(double begX, double begY, double endX, double endY){
@@ -96,7 +100,20 @@ public abstract class BaseLineElement extends RegionElement {
 
     @Override
     public void setElementX(double x) {
-        super.setElementX(x-widthLineRegion.get()/2);
+        begX.set(x);
+        //super.setElementX(x-widthLineRegion.get()/2);
+    }
+
+    @Override
+    public void setElementY(double y) {
+        begY.set(y);
+    }
+
+
+
+    @Override
+    public double getElementY() {
+        return begY.get();
     }
 
     public static void setWidthLineRegion(double w){

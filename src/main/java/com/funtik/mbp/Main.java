@@ -4,8 +4,10 @@ import com.funtik.mbp.gui.elements.*;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -35,14 +37,24 @@ public class Main extends Application {
         nameApp.setValue(name);
     }
 
+    double dx, dy;
     private Parent t(){
         Pane pane = new Pane();
 
-        TextElement tx = new TextElement("ASDFSD\nZXCVXZ");
-        tx.setLayoutX(100); tx.setLayoutY(100);
-        tx.setOnMouseClicked(e -> tx.getConnectPoint(e.getX(), e.getY()));
 
-        pane.getChildren().addAll(tx);
+        LineElemetn l = new LineElemetn(10, 10, 100, 10);
+
+
+        l.setOnMousePressed(e -> {
+            dx = e.getX(); dy = e.getY();
+        });
+        l.setOnMouseDragged(e -> {
+            l.setElementX(l.getLayoutX()+e.getX()-dx);
+            l.setElementY(l.getLayoutY()+e.getY()-dy);
+        });
+
+
+        pane.getChildren().addAll(l, l.beg, l.end);
 
         return pane;
     }

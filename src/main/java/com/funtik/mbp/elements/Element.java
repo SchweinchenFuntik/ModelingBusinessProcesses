@@ -20,6 +20,7 @@ public interface Element<TypeGUI, TypePopup> {
 
     //???
     default void update(){}
+
     default void focus(){}
     default void focusNot(){}
     default TypeGUI getNode(){ return (TypeGUI)this; }

@@ -4,9 +4,9 @@ import com.funtik.mbp.elements.ConnectPoint;
 import com.funtik.mbp.elements.Element;
 import com.funtik.mbp.util.Direction;
 import com.funtik.mbp.util.elements.LogicalConnectPoint;
+import javafx.beans.binding.Bindings;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-
 import java.util.EnumSet;
 import java.util.Iterator;
 
@@ -14,6 +14,7 @@ import java.util.Iterator;
  * Created by funtik on 07.05.17.
  * @author funtik
  * @version 0.01
+ * Перемещая это елемент двигать ConnectionPoint, который привязан к этому компоненту
  */
 public class TextElement extends StackPane implements Element {
     private Text text;
@@ -26,14 +27,15 @@ public class TextElement extends StackPane implements Element {
         getChildren().add(this.text);
         // Сделать bind Layout к point
         // тоней разницу между ними
-
+        // а ожет сделать наоборот
+        layoutXProperty().bind(Bindings.subtract(point.getX(), dx));
+        layoutYProperty().bind(Bindings.subtract(point.getY(), dy));
     }
-
-
 
     @Override
     public ConnectPoint getConnectPoint(double x, double y) {
-        double  w = getElementWidth(), h = getElementHeight();
+        double  xe  = getElementX(),        ye  = getElementY(),
+                w   = getElementWidth(),    h   = getElementHeight();
 
         EnumSet<Direction> d = Direction.getDirections(w/2, h/2, x, y);
 
@@ -51,8 +53,7 @@ public class TextElement extends StackPane implements Element {
         if(dx<dy) yy = y;
         else xx = x;
         this.dx = xx; this.dy = yy;
-        if(!point.updateConnectPoint(xx+getElementX(), yy+getElementY()))
-            return null;
+        if(!point.updateConnectPoint(xx+xe, yy+ye)) return null;
         return point;
     }
 
@@ -74,5 +75,15 @@ public class TextElement extends StackPane implements Element {
     @Override
     public double getElementHeight() {
         return getHeight();
+    }
+
+    @Override
+    public void setElementX(double x) {
+        point.getX().set(x+dx);
+    }
+
+    @Override
+    public void setElementY(double y) {
+        point.getY().set(y+dy);
     }
 }
