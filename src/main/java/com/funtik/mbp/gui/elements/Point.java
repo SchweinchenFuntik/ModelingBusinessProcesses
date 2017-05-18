@@ -2,12 +2,11 @@ package com.funtik.mbp.gui.elements;
 
 import com.funtik.mbp.elements.ConnectPoint;
 import com.funtik.mbp.elements.Element;
-import com.funtik.mbp.util.ChecksMinDoubleProperty;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
@@ -23,27 +22,56 @@ import javafx.scene.shape.Rectangle;
 public class Point extends StackPane implements Element, ConnectPoint {
 
     protected SimpleObjectProperty<Shape> shape;
-    protected static SimpleDoubleProperty szToCenter = new SimpleDoubleProperty(4);
-    private ChecksMinDoubleProperty xCenter;
-    private ChecksMinDoubleProperty yCenter;
+    protected static SimpleDoubleProperty szToCenterClass = new SimpleDoubleProperty(4);
+    private DoubleProperty xCenter;
+    private DoubleProperty yCenter;
+    private DoubleProperty szToCenter; // реализовать уникальный размер
+    private BooleanProperty isDefSize;
+
+    public Point(DoubleProperty xCenter, DoubleProperty yCenter){
+        init(0, 0, null, xCenter, yCenter, true);
+    }
 
     public Point(double x, double y, Shape s, boolean isDefBind){
-        init(x, y, s, isDefBind);
+        init(x, y, s, null, null,isDefBind);
     }
 
     public Point(double x, double y, Shape s){
-        init(x, y, s, true);
+        init(x, y, s, null, null, true);
     }
 
     public Point(double x, double y){
-        init(x, y, new Circle(), true);
+        init(x, y, new Circle(), null, null, true);
     }
 
     public Point(){
-        init(0, 0, new Circle(), true);
+        init(0, 0, new Circle(), null, null, true);
     }
 
-    private void init(double x, double y, Shape s, boolean isDefBind){
+    private void init(double x, double y, Shape s, DoubleProperty xCenter, DoubleProperty yCenter, boolean isDefBind){
+        shape = s!=null ? new SimpleObjectProperty<>(s):new SimpleObjectProperty<>(new Circle());
+        this.xCenter = xCenter == null ? new SimpleDoubleProperty():xCenter;
+        this.yCenter = yCenter == null ? new SimpleDoubleProperty():yCenter;
+        this.xCenter.set(x + szToCenterClass.get());
+        this.yCenter.set(y + szToCenterClass.get());
+        szToCenter = new SimpleDoubleProperty(szToCenterClass.get());
+        szToCenter.bind(szToCenterClass);
+
+
+        isDefSize = new SimpleBooleanProperty(true);
+        isDefSize.addListener((ob, ov, nv) -> {
+            if(nv==ov) return;
+            if(nv) szToCenter.bind(szToCenterClass);
+            else szToCenter.unbind();
+        });
+
+        setLayoutX(x); setLayoutY(y);
+        shape.addListener((observable, ov, nv) -> {
+            if(ov.equals(nv)) return;
+            ObservableList<Node> ch = getChildren();
+            ch.remove(ov); ch.add(nv);
+        });
+
         if(isDefBind && s != null){
             if(s instanceof Circle)
                 ((Circle) s).radiusProperty().bind(szToCenter);
@@ -53,35 +81,26 @@ public class Point extends StackPane implements Element, ConnectPoint {
                 ((Rectangle) s).widthProperty().bind(nb);
             }
         }
-        shape = s!=null ? new SimpleObjectProperty<>(s):new SimpleObjectProperty<>(new Circle());
-        xCenter = new ChecksMinDoubleProperty(x + szToCenter.get());
-        yCenter = new ChecksMinDoubleProperty(y + szToCenter.get());
+
+        getStyleClass().add("point");
+        getChildren().add(shape.get());
+
         szToCenter.addListener((observable, ov, nv) -> {
             double sz = nv.doubleValue() - ov.doubleValue();
             if(sz==0) return;
             xCenter.set(xCenter.get()+sz);
             yCenter.set(yCenter.get()+sz);
         });
-        xCenter.addListener((observable, ov, nv) -> {
+        this.xCenter.addListener((ObservableValue<? extends Number> observable, Number ov, Number nv) -> {
             double sz = nv.doubleValue() - ov.doubleValue();
             if(sz==0) return;
             setLayoutX(nv.doubleValue() - szToCenter.get());
         });
-        yCenter.addListener((observable, ov, nv) -> {
+        this.yCenter.addListener((observable, ov, nv) -> {
             double sz = nv.doubleValue() - ov.doubleValue();
             if(sz==0) return;
             setLayoutY(nv.doubleValue() - szToCenter.get());
         });
-
-
-        setLayoutX(x); setLayoutY(y);
-        shape.addListener((observable, ov, nv) -> {
-            if(ov.equals(nv)) return;
-            ObservableList<Node> ch = getChildren();
-            ch.remove(ov); ch.add(nv);
-        });
-        getStyleClass().add("point");
-        getChildren().add(shape.get());
     }
 
     public void setPointShape(Shape s){
@@ -93,25 +112,28 @@ public class Point extends StackPane implements Element, ConnectPoint {
     }
 
     public static void setSizePoint(double size){
-        szToCenter.set(size);
+        szToCenterClass.set(size);
     }
     public static double getSizePoint(){
-        return szToCenter.get();
+        return szToCenterClass.get();
     }
 
-    public static DoubleProperty szToCenterProperty(){ return szToCenter; } ///???????
+    public static DoubleProperty szToCenterProperty(){ return szToCenterClass; } ///???????
 
     public void setCenter(double x, double y){
         xCenter.setValue(x); yCenter.setValue(y);
     }
 
+    private void updateSzToCenterX(ObservableValue<? extends Number> observable, Number ov, Number nv){}
+    private void updateSzToCenterY(){}
+
     @Override
-    public ChecksMinDoubleProperty getX() {
+    public DoubleProperty getX() {
         return xCenter;
     }
 
     @Override
-    public ChecksMinDoubleProperty getY() {
+    public DoubleProperty getY() {
         return yCenter;
     }
 
@@ -147,5 +169,12 @@ public class Point extends StackPane implements Element, ConnectPoint {
     @Override
     public double getElementY() {
         return layoutYProperty().get();
+    }
+
+    @Override
+    public ConnectPoint getConnectPoint(double x, double y) {
+        // проверка являются кординаты правильнимы
+        // еще возможно проверка на обновления текущей точки updatePoint
+        return this;
     }
 }

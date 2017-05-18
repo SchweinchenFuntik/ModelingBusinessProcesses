@@ -4,15 +4,11 @@ import com.funtik.mbp.gui.elements.*;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import javax.xml.bind.annotation.XmlAnyElement;
+import org.w3c.dom.css.Rect;
 
 /**
  * Created by funtik on 26.03.17.
@@ -41,20 +37,29 @@ public class Main extends Application {
     private Parent t(){
         Pane pane = new Pane();
 
-
-        LineElemetn l = new LineElemetn(10, 10, 100, 10);
-
+        LineElement l = new LineElement(100, 100, 100, 300);
 
         l.setOnMousePressed(e -> {
             dx = e.getX(); dy = e.getY();
         });
         l.setOnMouseDragged(e -> {
-            l.setElementX(l.getLayoutX()+e.getX()-dx);
-            l.setElementY(l.getLayoutY()+e.getY()-dy);
+            l.setElementX(l.getElementX()+e.getX()-dx);
+            l.setElementY(l.getElementY()+e.getY()-dy);
         });
 
 
-        pane.getChildren().addAll(l, l.beg, l.end);
+        //RectangleVBox rvb0 = new RectangleVBox();
+       // rvb0.setElementX(100);
+        //rvb0.setElementY(150);
+
+        Rec r = new Rec();
+        r.setElementX(100);
+        r.setElementY(200);
+        r.setElementWidth(150);
+        r.setElementHeight(250);
+
+
+        pane.getChildren().addAll(r);
 
         return pane;
     }

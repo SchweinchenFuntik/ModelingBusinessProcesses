@@ -18,18 +18,21 @@ import java.util.Iterator;
  */
 public class TextElement extends StackPane implements Element {
     private Text text;
-    private ConnectPoint point = new LogicalConnectPoint();
+    private ConnectPoint point = new LogicalConnectPoint(){
+        @Override
+        public boolean updateConnectPoint(double x, double y) {
+            setLayoutX(x-dx); setLayoutY(y-dx);
+            return true;
+        }
+    };
     private double dx = 0, dy = 0;
 
     public TextElement(String text){
         getStyleClass().add("border");
         this.text = new Text(text);
         getChildren().add(this.text);
-        // Сделать bind Layout к point
-        // тоней разницу между ними
-        // а ожет сделать наоборот
-        layoutXProperty().bind(Bindings.subtract(point.getX(), dx));
-        layoutYProperty().bind(Bindings.subtract(point.getY(), dy));
+        point.getX().bind(Bindings.add(layoutXProperty(), dx));
+        point.getY().bind(Bindings.add(layoutYProperty(), dy));
     }
 
     @Override
@@ -57,6 +60,8 @@ public class TextElement extends StackPane implements Element {
         return point;
     }
 
+
+
     @Override
     public double getElementX() {
         return getLayoutX();
@@ -79,11 +84,11 @@ public class TextElement extends StackPane implements Element {
 
     @Override
     public void setElementX(double x) {
-        point.getX().set(x+dx);
+        setLayoutX(x);
     }
 
     @Override
     public void setElementY(double y) {
-        point.getY().set(y+dy);
+        setLayoutY(y);
     }
 }

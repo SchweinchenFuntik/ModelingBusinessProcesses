@@ -6,12 +6,20 @@ import java.util.Iterator;
 /**
  * Created by funtik on 07.05.17.
  */
-public class LineElemetn extends BaseLineElement {
+public class LineElement extends BaseLineElement {
+    // тут эти точки
+    private Point beg;
+    private Point end;
 
-    public LineElemetn(){}
+    public LineElement(){}
 
-    public LineElemetn(double begX, double begY, double endX, double endY) {
+    public LineElement(double begX, double begY, double endX, double endY) {
         super(begX, begY, endX, endY);
+        beg = new Point();
+        end = new Point();
+        // переписать линию так что бы у нее были персоналные настройки
+        //beg.layoutXProperty().bind();
+        getChildren().addAll(beg, end);
     }
 
     protected double getDeltaAngleDirection(double al){

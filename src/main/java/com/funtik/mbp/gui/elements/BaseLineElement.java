@@ -21,7 +21,6 @@ public abstract class BaseLineElement extends RegionElement {
     private EnumSet<Direction> directions;
     private Rotate rotate;
     private Line line = null;
-    public Point beg, end;
     private DoubleProperty begX, begY, endX, endY;
 
     public BaseLineElement(){
@@ -35,12 +34,10 @@ public abstract class BaseLineElement extends RegionElement {
     private void init(double begX, double begY, double endX, double endY){
         this.line       = new Line();
         this.rotate     = new Rotate();
-        this.beg        = new Point();
-        this.end        = new Point();
-        this.begX       = beg.getX();
-        this.begY       = beg.getY();
-        this.endX       = end.getX();
-        this.endY       = end.getY();
+        this.begX       = new SimpleDoubleProperty();
+        this.begY       = new SimpleDoubleProperty();
+        this.endX       = new SimpleDoubleProperty();
+        this.endY       = new SimpleDoubleProperty();
         prefWidthProperty().bind(widthLineRegion);
         line.layoutXProperty().bind(Bindings
                 .divide(widthLineRegion, 2));
@@ -51,6 +48,7 @@ public abstract class BaseLineElement extends RegionElement {
         line.strokeWidthProperty().bind(widthLine);
         rotate.pivotXProperty().bind(Bindings.divide(widthProperty(), 2));
         layoutXProperty().bind(Bindings.subtract(this.begX, rotate.pivotXProperty()));
+        layoutYProperty().bind(this.begY);
 
         if(!isNotUpdate(begX, begY, endX, endY)) updateLine(begX, begY, endX, endY);
         getChildren().addAll(line);

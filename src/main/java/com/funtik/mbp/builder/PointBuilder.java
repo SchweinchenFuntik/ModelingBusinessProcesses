@@ -2,6 +2,7 @@ package com.funtik.mbp.builder;
 
 import com.funtik.mbp.gui.elements.Point;
 import com.funtik.mbp.util.functions.Func;
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.util.Builder;
@@ -19,6 +20,7 @@ public class PointBuilder implements Builder<Point> {
     private double x, y;
     private Func focus, notFocus;
     private Consumer bind;
+    private DoubleProperty centerX, centerY;
 
     public PointBuilder setShape(Shape s){
         shape = s;
@@ -33,6 +35,16 @@ public class PointBuilder implements Builder<Point> {
     public PointBuilder setCenter(double x, double y){
         double sz = Point.getSizePoint();
         this.x = x - sz; this.y = y - sz;
+        return this;
+    }
+
+    public PointBuilder setCenterPropertyX(DoubleProperty p){
+        centerX = p;
+        return this;
+    }
+
+    public PointBuilder setCenterPropertyY(DoubleProperty p){
+        centerY = p;
         return this;
     }
 

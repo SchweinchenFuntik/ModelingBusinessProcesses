@@ -2,13 +2,20 @@ package com.funtik.mbp.gui.elements;
 
 import com.funtik.mbp.elements.Element;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 /**
  * Created by funtik on 03.05.17.
@@ -18,7 +25,7 @@ public class RectangleVBox extends Group implements Element {
     private static final String baseText = "Rectangle";
     private static int ID = 0;
 
-    private double x, y; // не тут
+
     private VBox pane;
     private Text text = new Text();
     private TextArea readerText;
@@ -26,8 +33,8 @@ public class RectangleVBox extends Group implements Element {
                         pLeftDown   = new Point(),
                         pRightTop   = new Point(),
                         pRightDown  = new Point();
-
     //// не тут
+    private double x, y; // не тут
     EventHandler<MouseEvent> eC = e ->{
         //Point p = (Point) e.getSource();
         //p.getX().set(p.getLayoutX()+e.getX()-x);
@@ -40,19 +47,56 @@ public class RectangleVBox extends Group implements Element {
         x = e.getX(); y = e.getY();
     };//
 
+    DoubleProperty width, height;
+    double minWidth = 0, minHeight = 0;
+
 
     public RectangleVBox(){
-        pane = new VBox();
-        pane.getStyleClass().add("rectangle");
-        pLeftTop.getX().bindBidirectional(pane.layoutXProperty());
-        pLeftTop.getY().bindBidirectional(pane.layoutYProperty());
-        pRightTop.getX().bind(Bindings.add(pane.layoutXProperty(), pane.widthProperty()));
-        pRightTop.getY().bindBidirectional(pane.layoutYProperty());
-        pane.getChildren().addAll(new Label("adw", new Text("ASDA")));
-        getChildren().addAll(pane, pLeftTop, pRightTop);
+        width = new SimpleDoubleProperty(0);
+        height = new SimpleDoubleProperty(0);
 
-        pane.setOnMousePressed(eP);
-        pane.setOnMouseDragged(eC);
+        ///////////////////////////////////////
+
+        text = new Text("asdaadwadawd");
+        text.setTextAlignment(TextAlignment.CENTER);
+        pane = new VBox(text);
+        pane.getStyleClass().add("rectangle");
+
+        //////////////////////////////////////////
+        // WIDTH, HEIGHT ////////
+        width.addListener((ob, ov, nv) ->
+                pane.setPrefWidth(nv.doubleValue()));
+        height.addListener((ob, ov, nv) ->
+                pane.setPrefHeight(nv.doubleValue()));
+
+        /////////////////////////////////////////
+
+        // Left // TOP // Point
+        pLeftTop.getX().addListener((ob, ov, nv) -> {
+            double dx = ov.doubleValue() - nv.doubleValue();
+            double w = pane.getWidth() + dx;
+            getMinSize();
+            setElementWidth(w);
+            System.out.println("WWWW ="+w);
+            if(minWidth<=w) pane.setLayoutX(pane.getLayoutX()-dx);
+            else pLeftTop.getX().setValue(ov);
+        });
+        pLeftTop.getY().addListener((ob, ov, nv) -> {
+            double dy = ov.doubleValue() - nv.doubleValue();
+            double h = pane.getHeight()+dy;
+            pane.setLayoutY(pane.getLayoutY() - dy);
+            setElementHeight(h + dy);
+
+        });
+        // Right // TOP // Point
+
+        // DOWN // Left // Point
+
+        // Right // DOWN // Point
+
+
+        //pane.setOnMousePressed(eP);
+        //pane.setOnMouseDragged(eC);
         pLeftTop.setOnMouseDragged(eC);
         pLeftTop.setOnMousePressed(eP);
         pLeftDown.setOnMouseDragged(eC);
@@ -61,25 +105,49 @@ public class RectangleVBox extends Group implements Element {
         pRightTop.setOnMousePressed(eP);
         pRightDown.setOnMouseDragged(eC);
         pRightDown.setOnMousePressed(eP);
+
+
+        getChildren().addAll(pane, pLeftTop);
+        width.set(pane.getWidth());
+        height.set(pane.getHeight());
+    }
+
+    private void getMinSize(){
+        minWidth = 0; minHeight = 0;
+        for(Node n :pane.getChildren()){
+            minWidth   += n.prefWidth(0);
+            minHeight  += n.prefHeight(0);
+        }
+        System.out.println(minWidth);
+    }
+
+    @Override
+    public double getElementWidth() {
+        return width.get();
+    }
+
+    @Override
+    public void setElementWidth(double width) {
+        this.width.setValue(width);
+    }
+
+    @Override
+    public double getElementHeight() {
+        return height.get();
+    }
+
+    @Override
+    public void setElementHeight(double height) {
+        this.height.setValue(height);
     }
 
     @Override
     public void setElementX(double x) {
-        setLayoutX(x);
+        pLeftTop.getX().setValue(x);
     }
 
     @Override
     public void setElementY(double y) {
-        setLayoutY(y);
-    }
-
-    @Override
-    public double getElementX() {
-        return layoutXProperty().get();
-    }
-
-    @Override
-    public double getElementY() {
-        return layoutYProperty().get();
+        pLeftTop.getY().setValue(y);
     }
 }
