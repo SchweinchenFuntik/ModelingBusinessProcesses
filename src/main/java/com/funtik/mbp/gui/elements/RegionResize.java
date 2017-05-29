@@ -6,39 +6,32 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 /**
  * Created by funtik on 18.05.17.
  * @author funtik
  * @version 0.1
  */
-public class Rec extends Group implements Element {
+public class RegionResize extends Group implements Element {
 
-
+    public DoubleProperty width, height;
     private double x, y;
     EventHandler<MouseEvent> eC = e ->{
         Element n = (Element) e.getSource();
         n.setElementX(n.getElementX() + e.getX() - x);
         n.setElementY(n.getElementY() + e.getY() - y);
-        e.consume();
     };
     EventHandler<MouseEvent> eP = e ->{
         x = e.getX(); y = e.getY();
     };
 
-    private DoubleProperty width, height;
     private Point pLeftTop, pLeftDown, pRightTop, pRightDown;
     private VBox pane;
 
-    public Rec(){
-        pane        = new VBox();
+    public RegionResize(){
         width       = new SimpleDoubleProperty();
         height      = new SimpleDoubleProperty();
         pLeftTop    = new Point();
@@ -88,32 +81,8 @@ public class Rec extends Group implements Element {
         width.bind(Bindings.subtract(pRightTop.getX(), pLeftTop.getX()));
         height.bind(Bindings.subtract(pLeftDown.getY(), pLeftTop.getY()));
 
-        pane.layoutXProperty().bind(pLeftTop.getX());
-        pane.layoutYProperty().bind(pLeftTop.getY());
+        getChildren().addAll(top, left, down, right, pLeftTop, pLeftDown, pRightDown, pRightTop);
 
-        width.addListener((ob, ov, nv) -> pane.setPrefWidth(nv.doubleValue()));
-        height.addListener((ob, ov, nv) -> pane.setPrefHeight(nv.doubleValue()));
-
-        Text t = new Text("adwadawdwa\nawdwad");
-        Label l = new Label("sdawdwa");
-
-        System.out.println(l.getLayoutBounds().getWidth());
-        l.setTextAlignment(TextAlignment.CENTER);
-        t.setTextAlignment(TextAlignment.CENTER);
-        StackPane st = new StackPane(t);
-        pane.getChildren().add(st);
-
-
-
-        pane.setOnMouseClicked(e->{
-       //     System.out.println("PrefWidth"+st.getPrefWidth()+"\tPrefHeight = "+st.getPrefHeight());
-       //     System.out.println("Width"+st.getMinWidth()+"\tHeight = "+st.getMinHeight());
-        //    System.out.println(l.getLayoutBounds().getWidth());
-        });
-
-
-
-        getChildren().addAll(top, left, down, right, pane, pLeftTop, pLeftDown, pRightDown, pRightTop);
     }
 
     @Override
@@ -138,16 +107,12 @@ public class Rec extends Group implements Element {
 
     @Override
     public void setElementX(double x) {
-        double dx = x - pLeftTop.getX().get();
         pLeftTop.getX().setValue(x);
-        pRightDown.getX().setValue(pRightDown.getX().get()+dx);
     }
 
     @Override
     public void setElementY(double y) {
-        double dy = y - pLeftTop.getY().get();
         pLeftTop.getY().setValue(y);
-        pRightDown.getY().setValue(pRightDown.getY().get()+dy);
     }
 
     @Override

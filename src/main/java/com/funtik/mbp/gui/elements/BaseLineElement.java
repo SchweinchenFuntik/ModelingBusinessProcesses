@@ -16,12 +16,12 @@ import java.util.EnumSet;
 // созда BaseLineElement и наследоватся от него, также от него наследуется и ArrowLine
 // ConnectionPoint beg, end
 public abstract class BaseLineElement extends RegionElement {
-    private static DoubleProperty widthLineRegion   = new SimpleDoubleProperty(8);
-    private static DoubleProperty widthLine         = new SimpleDoubleProperty(1.5);
+    protected static DoubleProperty widthLineRegion   = new SimpleDoubleProperty(8);
+    protected static DoubleProperty widthLine         = new SimpleDoubleProperty(1.5);
     private EnumSet<Direction> directions;
     private Rotate rotate;
     private Line line = null;
-    private DoubleProperty begX, begY, endX, endY;
+    protected DoubleProperty begX, begY, endX, endY;
 
     public BaseLineElement(){
         init(0, 0, 0, 0);
@@ -55,7 +55,7 @@ public abstract class BaseLineElement extends RegionElement {
         // beg and end add na WorkPane
     }
 
-    private void updateLine(double begX, double begY, double endX, double endY){
+    protected void updateLine(double begX, double begY, double endX, double endY){
         this.begX.set(begX); this.begY.set(begY);
         this.endX.set(endX); this.endY.set(endY);
         directions = Direction.getDirections(begX, begY, endX, endY);
@@ -71,8 +71,17 @@ public abstract class BaseLineElement extends RegionElement {
             }
             setHeight(b ? Math.abs(begX-endX):Math.abs(begY-endY));
         }
+
     }
 
+    /**
+     * Определяет длину линии когда Directions == 2
+     * @param begX
+     * @param begY
+     * @param endX
+     * @param endY
+     * @return
+     */
     protected abstract double getLengthLine(double begX, double begY, double endX, double endY);
 
     public void setLengthLine(double l){
@@ -98,16 +107,27 @@ public abstract class BaseLineElement extends RegionElement {
 
     @Override
     public void setElementX(double x) {
-        begX.set(x);
+        double dx = x-begX.get();
+
+        begX.setValue(x);
+        //endX.setValue(endX.get()+dx);
         //super.setElementX(x-widthLineRegion.get()/2);
     }
 
     @Override
-    public void setElementY(double y) {
-        begY.set(y);
+    public double getElementX() {
+        return begX.get();
     }
 
-
+    @Override
+    public void setElementY(double y) {
+        double dy = y - begY.get();
+        System.out.println(dy);
+        System.out.println(begY.get());
+        System.out.println(endY.get()+"\n");
+        begY.setValue(y);
+      //  endY.set(y+dy);
+    }
 
     @Override
     public double getElementY() {
@@ -130,4 +150,35 @@ public abstract class BaseLineElement extends RegionElement {
         return rotate;
     }
 
+    public double getBegX() {
+        return begX.get();
+    }
+
+    public DoubleProperty begXProperty() {
+        return begX;
+    }
+
+    public double getBegY() {
+        return begY.get();
+    }
+
+    public DoubleProperty begYProperty() {
+        return begY;
+    }
+
+    public double getEndX() {
+        return endX.get();
+    }
+
+    public DoubleProperty endXProperty() {
+        return endX;
+    }
+
+    public double getEndY() {
+        return endY.get();
+    }
+
+    public DoubleProperty endYProperty() {
+        return endY;
+    }
 }

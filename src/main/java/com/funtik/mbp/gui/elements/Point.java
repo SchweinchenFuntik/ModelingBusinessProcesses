@@ -52,8 +52,6 @@ public class Point extends StackPane implements Element, ConnectPoint {
         shape = s!=null ? new SimpleObjectProperty<>(s):new SimpleObjectProperty<>(new Circle());
         this.xCenter = xCenter == null ? new SimpleDoubleProperty():xCenter;
         this.yCenter = yCenter == null ? new SimpleDoubleProperty():yCenter;
-        this.xCenter.set(x + szToCenterClass.get());
-        this.yCenter.set(y + szToCenterClass.get());
         szToCenter = new SimpleDoubleProperty(szToCenterClass.get());
         szToCenter.bind(szToCenterClass);
 
