@@ -49,8 +49,13 @@ public abstract class BaseLineElement extends RegionElement {
         rotate.pivotXProperty().bind(Bindings.divide(widthProperty(), 2));
         layoutXProperty().bind(Bindings.subtract(this.begX, rotate.pivotXProperty()));
         layoutYProperty().bind(this.begY);
+        this.begX.addListener((ob, ov, nv) -> updateLine(nv.doubleValue(), getBegY(), getEndX(), getEndY()));
+        this.endX.addListener((ob, ov, nv) -> updateLine(getBegX(), getBegY(), nv.doubleValue(), getEndY()));
+        this.begY.addListener((ob, ov, nv) -> updateLine(getBegX(), nv.doubleValue(), getEndX(), getEndY()));
+        this.endY.addListener((ob, ov, nv) -> updateLine(getBegX(), getBegY(), getEndX(), nv.doubleValue()));
 
-        if(!isNotUpdate(begX, begY, endX, endY)) updateLine(begX, begY, endX, endY);
+        //if(!isNotUpdate(begX, begY, endX, endY))
+            updateLine(begX, begY, endX, endY);
         getChildren().addAll(line);
         // beg and end add na WorkPane
     }
@@ -60,7 +65,7 @@ public abstract class BaseLineElement extends RegionElement {
         this.endX.set(endX); this.endY.set(endY);
         directions = Direction.getDirections(begX, begY, endX, endY);
         if(directions.size()>1) setHeight(getLengthLine(begX, begY, endX, endY));
-        else {
+        else if(directions.size() == 1){
             Direction d = directions.iterator().next();
             boolean b = false;
             switch (d){
@@ -107,7 +112,8 @@ public abstract class BaseLineElement extends RegionElement {
 
     @Override
     public void setElementX(double x) {
-        double dx = x-begX.get();
+        //double dx = getEndX() - getBegX();
+        //updateLine(x, getBegY(), getEndX() - dx, getEndY());
 
         begX.setValue(x);
         //endX.setValue(endX.get()+dx);
@@ -121,12 +127,8 @@ public abstract class BaseLineElement extends RegionElement {
 
     @Override
     public void setElementY(double y) {
-        double dy = y - begY.get();
-        System.out.println(dy);
-        System.out.println(begY.get());
-        System.out.println(endY.get()+"\n");
-        begY.setValue(y);
-      //  endY.set(y+dy);
+        //setBegPoint(begX.get(), y);
+        endY.setValue(y);
     }
 
     @Override

@@ -6,6 +6,11 @@
     -fx-background-color: -fx-focus-color;
 }
 
+.border {
+    -fx-border-color: black;
+    -fx-border-width: 2;
+}
+
 .rectangle {
     -fx-border-color: black;
     -fx-border-width: 2;
@@ -57,9 +62,6 @@
 
 
 
-.border {
-    -fx-border-color: black;
-}
 
 .t{
     -fx-background-color: black;

@@ -97,13 +97,10 @@ public class Rec extends Group implements Element {
         Text t = new Text("adwadawdwa\nawdwad");
         Label l = new Label("sdawdwa");
 
-        System.out.println(l.getLayoutBounds().getWidth());
         l.setTextAlignment(TextAlignment.CENTER);
         t.setTextAlignment(TextAlignment.CENTER);
         StackPane st = new StackPane(t);
         pane.getChildren().add(st);
-
-
 
         pane.setOnMouseClicked(e->{
        //     System.out.println("PrefWidth"+st.getPrefWidth()+"\tPrefHeight = "+st.getPrefHeight());

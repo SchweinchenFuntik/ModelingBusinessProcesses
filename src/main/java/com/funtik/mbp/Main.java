@@ -1,20 +1,14 @@
 package com.funtik.mbp;
 
 import com.funtik.mbp.elements.Element;
-import com.funtik.mbp.elements.FocusShell;
-import com.funtik.mbp.gui.FocusShellElement;
 import com.funtik.mbp.gui.elements.*;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.w3c.dom.css.Rect;
-
-import javax.swing.plaf.synth.Region;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +23,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Scene scene = new Scene(t(), 700, 700);
+        Pane parent = t();
+        Scene scene = new Scene(parent, 700, 700);
         scene.getStylesheets().add("styles/style.css");
         stage.setScene(scene);
         stage.titleProperty().bind(nameApp);
@@ -41,28 +36,24 @@ public class Main extends Application {
     }
 
     double dx, dy;
-    private Parent t(){
+    private Pane t(){
         Pane pane = new Pane();
 
         LineElement l = new LineElement(100, 100, 100, 300);
 
-        l.setElementY(50);
-        l.setElementX(50);
+        //l.setElementY(50);
+        //l.setElementX(50);
 
-        l.setOnMousePressed(e -> {
-            System.out.println(l.getHeight());
-            dx = e.getX(); dy = e.getY();
-        });
-        l.setOnMouseReleased(e -> {
-            l.setElementX(l.getElementX()+e.getX() - dx);
-            l.setElementY(l.getElementY()+e.getY() - dy);
-        });
+//        l.setOnMouseDragged(e -> {
+//            l.setElementX(l.getElementX()+e.getX());
+//            l.setElementY(l.getElementY()+e.getY());
+//        });
 
-        l.setOnMouseClicked(e -> {
+//        l.setOnMouseClicked(e -> {
 //            l.focus();
 //            pane.getChildren().remove(l);
 //            pane.getChildren().add(l.getFs());
-        });
+//        });
 
 
         //RectangleVBox rvb0 = new RectangleVBox();
@@ -78,9 +69,6 @@ public class Main extends Application {
         //r.setElementX(50);
         //r.setElementY(50);
 
-
-
-
 //        pane.setOnMousePressed(e -> {
 //            Element el = getChildPoint(pane, e.getX(), e.getY());
 //            if(el == null) return;
@@ -95,12 +83,32 @@ public class Main extends Application {
 //            el.setElementY(e.getY()-dy);
 //        });
 
+        xor = new LogicalElement("X", false);
+        xor.setLayoutX(100);
+        xor.setLayoutY(150);
 
+        anchor.setLayoutX(50); anchor.setLayoutY(50);
+        anchor.setPrefSize(200, 100);
+        anchor.getStyleClass().add("border");
 
+        //System.out.println(anchor.getProperties().get("prefWidth"));
 
-        pane.getChildren().addAll(l);
+        pane.getChildren().addAll(anchor);
 
         return pane;
+    }
+
+    LogicalElement xor;
+    AnchorElement2 anchor = new AnchorElement2();
+
+    private Element getEl(){
+        T t = new T();
+        t.getStyleClass().add("border");
+       // t.setLayoutX(500);
+      //  t.setLayoutY(500);
+      /// t.setPrefSize(100, 100);
+       /// t.getPrefWidth();
+        return t;
     }
 
     private ArrayList<Node> getChildRect(Pane pane, double x, double y){

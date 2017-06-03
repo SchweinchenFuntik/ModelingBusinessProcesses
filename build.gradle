@@ -1,14 +1,15 @@
 group 'com.funtik.mbp'
 version '0.1'
-sourceCompatibility = 1.8
-mainClassName='com.funtik.mbp.Main'
+
+apply plugin: 'java'
+apply plugin: 'application'
 
 repositories {
     mavenCentral()
 }
 
-apply plugin: 'java'
-apply plugin: 'application'
+sourceCompatibility = 1.8
+mainClassName='com.funtik.mbp.Main'
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'

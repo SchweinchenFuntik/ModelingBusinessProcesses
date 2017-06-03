@@ -1,9 +1,13 @@
 package com.funtik.mbp.util.ref;
 
+import com.sun.istack.internal.NotNull;
+import sun.reflect.generics.tree.ReturnType;
+
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,13 +106,60 @@ public class ClassRef {
         Class s = c.getSuperclass();
         return s==Object.class ? false:isInterface(s, i);
     }
-    public static boolean isClass(Class c, Class sheart){
-        if(c == sheart) return true;
+    public static boolean isClass(Class c, Class search){
+        if(c == search) return true;
         Class sp = c.getSuperclass();
-        if(sp == sheart) return true;
-        return sp==null ? false:isClass(sp, sheart);
-    } 
-    
+        if(sp == search) return true;
+        return sp==null ? false:isClass(sp, search);
+    }
+
+    public static Method getMethod(String name, Class c, Class returnType, @NotNull Class... paramType){
+        Method [] methods = c.getDeclaredMethods();
+        for(Method m:methods)
+            if(m.getName().equals(name))
+                if(m.getReturnType() == returnType)
+                    if(paramType == null && m.getParameterCount() == 0) return m;
+                    else if(paramType != null && m.getParameterCount() == paramType.length) {
+                        for (int i = 0; i < paramType.length; i++)
+                            if (m.getParameterTypes()[i].equals(paramType[i]))
+                                return null;
+                        return m;
+                    }
+
+        Class superC = c.getSuperclass();
+        return superC == null ? null:getMethod(name, superC, returnType, paramType);
+    }
+
+    public static <ReturnType> ReturnType calcMethod(String name, Object o, Class retType){
+        Method m = getMethod(name, o.getClass(), retType, null);
+        if(m == null) throw  new NullPointerException("Not method: "+name);
+        try {
+            return (ReturnType) m.invoke(o);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return (ReturnType) null;
+    }
+
+    public static <ReturnType> ReturnType calcMethod(String name, Object o, Class retType, Object... param){
+        if(param == null) return calcMethod(name, o, retType);
+        Class [] paramType = new Class[param.length];
+        for (int i=0; i<param.length; i++) paramType[i] = param[i].getClass();
+        Method m = getMethod(name, o.getClass(), retType, paramType);
+        if(m == null) throw  new NullPointerException("Not method: "+name);
+        try {
+            m.setAccessible(true);
+            return (ReturnType) m.invoke(o, param);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return (ReturnType) null;
+    }
+
     public static Set<AnnotationHandler> getAnnotations(){ return WORKER; }
 
 }

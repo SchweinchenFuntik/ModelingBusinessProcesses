@@ -55,7 +55,6 @@ public class Point extends StackPane implements Element, ConnectPoint {
         szToCenter = new SimpleDoubleProperty(szToCenterClass.get());
         szToCenter.bind(szToCenterClass);
 
-
         isDefSize = new SimpleBooleanProperty(true);
         isDefSize.addListener((ob, ov, nv) -> {
             if(nv==ov) return;
@@ -69,7 +68,7 @@ public class Point extends StackPane implements Element, ConnectPoint {
             ObservableList<Node> ch = getChildren();
             ch.remove(ov); ch.add(nv);
         });
-
+        s = shape.get();
         if(isDefBind && s != null){
             if(s instanceof Circle)
                 ((Circle) s).radiusProperty().bind(szToCenter);
@@ -80,24 +79,16 @@ public class Point extends StackPane implements Element, ConnectPoint {
             }
         }
 
-        getStyleClass().add("point");
         getChildren().add(shape.get());
+
+        layoutXProperty().bind(Bindings.subtract(this.xCenter, szToCenter));
+        layoutYProperty().bind(Bindings.subtract(this.yCenter, szToCenter));
 
         szToCenter.addListener((observable, ov, nv) -> {
             double sz = nv.doubleValue() - ov.doubleValue();
             if(sz==0) return;
             xCenter.set(xCenter.get()+sz);
             yCenter.set(yCenter.get()+sz);
-        });
-        this.xCenter.addListener((ObservableValue<? extends Number> observable, Number ov, Number nv) -> {
-            double sz = nv.doubleValue() - ov.doubleValue();
-            if(sz==0) return;
-            setLayoutX(nv.doubleValue() - szToCenter.get());
-        });
-        this.yCenter.addListener((observable, ov, nv) -> {
-            double sz = nv.doubleValue() - ov.doubleValue();
-            if(sz==0) return;
-            setLayoutY(nv.doubleValue() - szToCenter.get());
         });
     }
 
@@ -174,5 +165,10 @@ public class Point extends StackPane implements Element, ConnectPoint {
         // проверка являются кординаты правильнимы
         // еще возможно проверка на обновления текущей точки updatePoint
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName()+": "+getX().get()+"\t"+getY().get();
     }
 }

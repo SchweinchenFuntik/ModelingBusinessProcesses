@@ -7,24 +7,25 @@ import javafx.beans.value.ObservableValue;
 /**
  * Created by funtik on 29.04.17.
  */
-public class ChecksMinDoubleProperty extends SimpleDoubleProperty {
+public class ChecksDoubleProperty extends SimpleDoubleProperty {
     private SimpleDoubleProperty min;
+    private SimpleDoubleProperty max;
 
-    public ChecksMinDoubleProperty(){
+    public ChecksDoubleProperty(){
         min = new SimpleDoubleProperty();
     }
 
-    public ChecksMinDoubleProperty(double val){
+    public ChecksDoubleProperty(double val){
         super(val);
         min = new SimpleDoubleProperty();
     }
 
-    public ChecksMinDoubleProperty(double val, double min){
+    public ChecksDoubleProperty(double val, double min){
         super(val);
         this.min = new SimpleDoubleProperty(min);
     }
 
-    public ChecksMinDoubleProperty(double val, ObservableValue<? extends Number> bindMin){
+    public ChecksDoubleProperty(double val, ObservableValue<? extends Number> bindMin){
         super(val);
         min.bind(bindMin);
     }
