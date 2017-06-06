@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Repeatable(AddProperties.class)
 public @interface AddProperty {
-    public String name();
-    public Class type() default Object.class;
-    public boolean isCreate() default true;
+    String name();
+    Class type() default Object.class;
+    boolean isCreate() default true;
 }

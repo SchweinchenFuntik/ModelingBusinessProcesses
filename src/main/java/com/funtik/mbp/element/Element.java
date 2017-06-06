@@ -1,4 +1,4 @@
-package com.funtik.mbp.elements;
+package com.funtik.mbp.element;
 
 /**
  * Created by funtik on 02.04.17.
@@ -16,14 +16,12 @@ public interface Element<TypeGUI, TypePopup> {
     default void    setElementWidth(double width){}
     default void    setElementHeight(double height){}
 
-    //???
-    default void update(){}
-
     default void focus(){}
     default void focusNot(){}
     default FocusShell getFocusShell(){
         return (FocusShell) this;
     }
+    default WorkSpace getWorkSpace(){ return null; }
     default TypeGUI getNode(){
         return (TypeGUI)this;
     }

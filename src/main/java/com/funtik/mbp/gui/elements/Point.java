@@ -1,11 +1,10 @@
 package com.funtik.mbp.gui.elements;
 
-import com.funtik.mbp.elements.ConnectPoint;
-import com.funtik.mbp.elements.Element;
+import com.funtik.mbp.element.ConnectPoint;
+import com.funtik.mbp.element.Element;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -19,14 +18,14 @@ import javafx.scene.shape.Rectangle;
  * @author Funtik
  * @version 0.8
  */
-public class Point extends StackPane implements Element, ConnectPoint {
+public class Point extends StackPane implements NodeElement, ConnectPoint {
 
     protected SimpleObjectProperty<Shape> shape;
     protected static SimpleDoubleProperty szToCenterClass = new SimpleDoubleProperty(4);
-    private DoubleProperty xCenter;
-    private DoubleProperty yCenter;
-    private DoubleProperty szToCenter; // реализовать уникальный размер
-    private BooleanProperty isDefSize;
+    protected DoubleProperty xCenter;
+    protected DoubleProperty yCenter;
+    protected DoubleProperty szToCenter; // реализовать уникальный размер
+    protected BooleanProperty isDefSize;
 
     public Point(DoubleProperty xCenter, DoubleProperty yCenter){
         init(0, 0, null, xCenter, yCenter, true);
@@ -100,21 +99,9 @@ public class Point extends StackPane implements Element, ConnectPoint {
         return shape.get();
     }
 
-    public static void setSizePoint(double size){
-        szToCenterClass.set(size);
-    }
-    public static double getSizePoint(){
-        return szToCenterClass.get();
-    }
-
-    public static DoubleProperty szToCenterProperty(){ return szToCenterClass; } ///???????
-
     public void setCenter(double x, double y){
         xCenter.setValue(x); yCenter.setValue(y);
     }
-
-    private void updateSzToCenterX(ObservableValue<? extends Number> observable, Number ov, Number nv){}
-    private void updateSzToCenterY(){}
 
     @Override
     public DoubleProperty getX() {
@@ -133,12 +120,6 @@ public class Point extends StackPane implements Element, ConnectPoint {
     }
 
     @Override
-    public void focus() {}
-
-    @Override
-    public void focusNot() {}
-
-    @Override
     public void setElementX(double x) {
         double sz = szToCenter.get();
         xCenter.set(x+sz);
@@ -151,24 +132,17 @@ public class Point extends StackPane implements Element, ConnectPoint {
     }
 
     @Override
-    public double getElementX() {
-        return layoutXProperty().get();
-    }
-
-    @Override
-    public double getElementY() {
-        return layoutYProperty().get();
-    }
-
-    @Override
     public ConnectPoint getConnectPoint(double x, double y) {
-        // проверка являются кординаты правильнимы
-        // еще возможно проверка на обновления текущей точки updatePoint
         return this;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName()+": "+getX().get()+"\t"+getY().get();
+    public static void setSizePoint(double size){
+        szToCenterClass.set(size);
     }
+    public static double getSizePoint(){
+        return szToCenterClass.get();
+    }
+
+    public static DoubleProperty szToCenterProperty(){ return szToCenterClass; } ///???????
+
 }

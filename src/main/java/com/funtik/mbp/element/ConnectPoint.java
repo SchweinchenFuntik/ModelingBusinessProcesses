@@ -1,4 +1,4 @@
-package com.funtik.mbp.elements;
+package com.funtik.mbp.element;
 
 import javafx.beans.property.DoubleProperty;
 

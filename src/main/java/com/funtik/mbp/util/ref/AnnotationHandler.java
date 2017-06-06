@@ -15,21 +15,21 @@ public class AnnotationHandler<A extends Annotation, Obj> {
     private FuncHandler<A,Obj> f;
     private ElementType[] type;
     
-    public  static Collection<AnnotationHandler> 
-        getHandler(FuncHandler<? extends Annotation,?> f, Class<? extends Annotation>... a){
+    public static Collection<AnnotationHandler> getHandler(FuncHandler<? extends Annotation,?> f,
+                                                           Class<? extends Annotation>... a){
             
         ArrayList ahs = new ArrayList(a.length);
         for(Class c:a) ahs.add(new AnnotationHandler(c, f));
         return ahs;
     }
     
-    public AnnotationHandler(){ intit(null, null); }
-    public AnnotationHandler(Class<A> a){ intit(a, null); }
+    public AnnotationHandler(){ init(null, null); }
+    public AnnotationHandler(Class<A> a){ init(a, null); }
     public AnnotationHandler(Class<A> a, FuncHandler<A,Obj> f){
-        intit(a, f); 
+        init(a, f);
     }
     
-    private void intit(Class<A> a,  FuncHandler<A,Obj> f){
+    private void init(Class<A> a, FuncHandler<A,Obj> f){
         this.a = a; this.f = f;
         type = a.getAnnotation(Target.class).value();
     }

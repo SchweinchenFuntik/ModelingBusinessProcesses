@@ -1,18 +1,13 @@
 package com.funtik.mbp.gui.elements;
 
-import com.funtik.mbp.elements.Element;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.NumberBinding;
+import com.funtik.mbp.element.Element;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;

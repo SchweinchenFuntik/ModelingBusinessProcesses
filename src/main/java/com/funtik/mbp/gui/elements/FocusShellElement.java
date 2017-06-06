@@ -1,8 +1,9 @@
 package com.funtik.mbp.gui.elements;
 
-import com.funtik.mbp.elements.ConnectPoint;
-import com.funtik.mbp.elements.Element;
-import com.funtik.mbp.elements.FocusShell;
+import com.funtik.mbp.element.ConnectPoint;
+import com.funtik.mbp.element.Element;
+import com.funtik.mbp.element.FocusShell;
+import com.sun.istack.internal.NotNull;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 
@@ -12,13 +13,22 @@ import javafx.scene.Group;
 public class FocusShellElement implements FocusShell<Group>{
 
     private Group group;
+    private NodeElement element;
+
+    public FocusShellElement(@NotNull NodeElement el){
+        element = el;
+    }
+
+    public FocusShellElement(@NotNull NodeElement el, ConnectPoint... points){
+        element = el;
+        getFocusShell(el, false, points);
+    }
 
     @Override
     public Group getFocusShell(Element el, boolean isCreateGUI, ConnectPoint... points) {
         if(el == null) return null;
-        group = new Group();
+        if(group == null) group = new Group();
         ObservableList children = group.getChildren();
-        children.add(el.getNode());
         if(isCreateGUI)
             for(ConnectPoint p:points) children.add(new Point(p.getX(), p.getY()));
         else children.addAll(points);
@@ -36,6 +46,7 @@ public class FocusShellElement implements FocusShell<Group>{
 
     @Override
     public Group getShell() {
+///        group.getChildren().add(element.getNode());
         return group;
     }
 

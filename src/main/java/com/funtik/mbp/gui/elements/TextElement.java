@@ -1,7 +1,6 @@
 package com.funtik.mbp.gui.elements;
 
-import com.funtik.mbp.elements.ConnectPoint;
-import com.funtik.mbp.elements.Element;
+import com.funtik.mbp.element.ConnectPoint;
 import com.funtik.mbp.util.Direction;
 import com.funtik.mbp.util.elements.LogicalConnectPoint;
 import javafx.beans.binding.Bindings;
@@ -16,8 +15,11 @@ import java.util.Iterator;
  * @version 0.01
  * Перемещая это елемент двигать ConnectionPoint, который привязан к этому компоненту
  */
-public class TextElement extends StackPane implements Element {
+public class TextElement extends StackPane implements NodeElement {
     private Text text;
+
+    // переделать под Point
+    // или объеденить их
     private ConnectPoint point = new LogicalConnectPoint(){
         @Override
         public boolean updateConnectPoint(double x, double y) {
@@ -60,35 +62,4 @@ public class TextElement extends StackPane implements Element {
         return point;
     }
 
-
-
-    @Override
-    public double getElementX() {
-        return getLayoutX();
-    }
-
-    @Override
-    public double getElementY() {
-        return getLayoutY();
-    }
-
-    @Override
-    public double getElementWidth() {
-        return getWidth();
-    }
-
-    @Override
-    public double getElementHeight() {
-        return getHeight();
-    }
-
-    @Override
-    public void setElementX(double x) {
-        setLayoutX(x);
-    }
-
-    @Override
-    public void setElementY(double y) {
-        setLayoutY(y);
-    }
 }

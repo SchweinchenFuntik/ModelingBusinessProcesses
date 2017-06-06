@@ -4,8 +4,12 @@ import com.funtik.mbp.util.Direction;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.layout.Region;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
+
+import javax.xml.soap.Node;
 import java.util.EnumSet;
 
 /**
@@ -13,9 +17,7 @@ import java.util.EnumSet;
  * @author funtik
  * @version 0.3
  */
-// созда BaseLineElement и наследоватся от него, также от него наследуется и ArrowLine
-// ConnectionPoint beg, end
-public abstract class BaseLineElement extends RegionElement {
+public abstract class BaseLineElement extends Region implements NodeElement {
     protected static DoubleProperty widthLineRegion   = new SimpleDoubleProperty(8);
     protected static DoubleProperty widthLine         = new SimpleDoubleProperty(1.5);
     private EnumSet<Direction> directions;
@@ -39,11 +41,10 @@ public abstract class BaseLineElement extends RegionElement {
         this.endX       = new SimpleDoubleProperty();
         this.endY       = new SimpleDoubleProperty();
         prefWidthProperty().bind(widthLineRegion);
-        line.layoutXProperty().bind(Bindings
-                .divide(widthLineRegion, 2));
-
+        line.layoutXProperty().bind(Bindings.divide(widthLineRegion, 2));
         getTransforms().add(rotate);
-        setElementY(begY);
+//        setElementY(begY);
+
         line.endYProperty().bind(Bindings.subtract(heightProperty(), 2));
         line.strokeWidthProperty().bind(widthLine);
         rotate.pivotXProperty().bind(Bindings.divide(widthProperty(), 2));
@@ -54,8 +55,7 @@ public abstract class BaseLineElement extends RegionElement {
         this.begY.addListener((ob, ov, nv) -> updateLine(getBegX(), nv.doubleValue(), getEndX(), getEndY()));
         this.endY.addListener((ob, ov, nv) -> updateLine(getBegX(), getBegY(), getEndX(), nv.doubleValue()));
 
-        //if(!isNotUpdate(begX, begY, endX, endY))
-            updateLine(begX, begY, endX, endY);
+        updateLine(begX, begY, endX, endY);
         getChildren().addAll(line);
         // beg and end add na WorkPane
     }
@@ -112,12 +112,7 @@ public abstract class BaseLineElement extends RegionElement {
 
     @Override
     public void setElementX(double x) {
-        //double dx = getEndX() - getBegX();
-        //updateLine(x, getBegY(), getEndX() - dx, getEndY());
-
         begX.setValue(x);
-        //endX.setValue(endX.get()+dx);
-        //super.setElementX(x-widthLineRegion.get()/2);
     }
 
     @Override
@@ -127,8 +122,7 @@ public abstract class BaseLineElement extends RegionElement {
 
     @Override
     public void setElementY(double y) {
-        //setBegPoint(begX.get(), y);
-        endY.setValue(y);
+        begY.setValue(y);
     }
 
     @Override

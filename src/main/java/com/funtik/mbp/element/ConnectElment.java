@@ -1,4 +1,4 @@
-package com.funtik.mbp.elements;
+package com.funtik.mbp.element;
 
 /**
  * Created by funtik on 16.05.17.

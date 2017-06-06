@@ -1,11 +1,9 @@
 package com.funtik.mbp.gui.elements;
 
-import com.funtik.mbp.elements.Element;
+import com.funtik.mbp.element.Element;
 import com.funtik.mbp.gui.FocusShellElement;
 import com.funtik.mbp.util.Direction;
-import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
 import java.util.Iterator;
@@ -29,8 +27,6 @@ public class LineElement extends BaseLineElement {
         x = e.getX(); y = e.getY();
     };
 
-    public LineElement(){}
-
     public LineElement(double begX, double begY, double endX, double endY) {
         super(begX, begY, endX, endY);
 
@@ -51,6 +47,14 @@ public class LineElement extends BaseLineElement {
         //getChildren().addAll(beg, end);
     }
 
+    public Point getBeg() {
+        return beg;
+    }
+
+    public Point getEnd() {
+        return end;
+    }
+
     protected double getDeltaAngleDirection(double al){
         Iterator<Direction> i = getDirections().iterator();
         while(i.hasNext()){
@@ -68,13 +72,13 @@ public class LineElement extends BaseLineElement {
         return Math.sqrt(a*a+b*b);
     }
 
-//    FocusShellElement fs;
-//    @Override
-//    public void focus() {
-//        fs = new com.funtik.mbp.gui.FocusShellElement((Element)this, true, beg, end);
-//    }
+    FocusShellElement fs;
+    @Override
+    public void focus() {
+        fs = new com.funtik.mbp.gui.FocusShellElement(this, true, beg, end);
+    }
 
-//    public FocusShellElement getFs() {
-//        return fs;
-//    }
+    public FocusShellElement getFs() {
+        return fs;
+    }
 }

@@ -1,26 +1,14 @@
 package com.funtik.mbp.gui.elements;
 
-import com.funtik.mbp.elements.Element;
-import com.funtik.mbp.elements.FocusShell;
+import com.funtik.mbp.element.FocusShell;
 import javafx.scene.Group;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
  * Created by funtik on 02.06.17.
  */
-public class AnchorElement extends AnchorPane implements Element<AnchorPane, ContextMenu> {
-    @Override
-    public double getElementX() {
-        return getLayoutX();
-    }
-
-    @Override
-    public double getElementY() {
-        return getLayoutY();
-    }
-
+public class AnchorElement extends AnchorPane implements NodeElement {
     @Override
     public double getElementWidth() {
         return getWidth();
@@ -29,16 +17,6 @@ public class AnchorElement extends AnchorPane implements Element<AnchorPane, Con
     @Override
     public double getElementHeight() {
         return getHeight();
-    }
-
-    @Override
-    public void setElementX(double x) {
-        setLayoutX(x);
-    }
-
-    @Override
-    public void setElementY(double y) {
-        setLayoutY(y);
     }
 
     @Override

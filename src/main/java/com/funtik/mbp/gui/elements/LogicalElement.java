@@ -1,11 +1,8 @@
 package com.funtik.mbp.gui.elements;
 
-import com.funtik.mbp.elements.Element;
-import com.funtik.mbp.elements.FocusShell;
+import com.funtik.mbp.element.FocusShell;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -16,12 +13,12 @@ import javafx.scene.text.TextAlignment;
 /**
  * Created by funtik on 31.05.17.
  */
-public class LogicalElement extends AnchorPane implements Element<Node, ContextMenu>{
+public class LogicalElement extends AnchorPane implements NodeElement {
 
     public enum Operators{AND, OR, XOR, AND_A, OR_A}
 
     private StringProperty symbol;
-    private FocusShell shell = new FocusShellElement();
+    private FocusShell shell = new FocusShellElement(this);
 
     public LogicalElement(String symbol, boolean asynchronous){
         init(symbol, asynchronous);
@@ -80,8 +77,8 @@ public class LogicalElement extends AnchorPane implements Element<Node, ContextM
 
     public final static LogicalElement createLogicalElement(Operators o){
         switch (o){
-            case AND:   return new LogicalElement("&",  false);
-            case OR:    return new LogicalElement("O",  false);
+            case AND:   return new LogicalElement("&", false);
+            case OR:    return new LogicalElement("O", false);
             case XOR:   return new LogicalElement("X", true);
             case AND_A: return new LogicalElement("&", true);
             case OR_A:  return new LogicalElement("O", true);

@@ -1,4 +1,4 @@
-package com.funtik.mbp.event;
+package com.funtik.mbp.element;
 
 import javafx.scene.input.MouseEvent;
 
@@ -11,28 +11,28 @@ import javafx.scene.input.MouseEvent;
  * @author funtik
  */
 public interface EventMouse<Obj> extends Event<Obj>{
-    public enum Type{CLICK, DRAGGED, PRESSED, RELEASSED, ENTERED, EXITED}
+    enum Type{CLICK, DRAGGED, PRESSED, RELEASSED, ENTERED, EXITED}
     
-    public default void click(MouseEvent e){}
+    default void click(MouseEvent e){}
     /**
      * Когда мышка нажата и находися над обектом
      * @param e 
      */
-    public default void dragged(MouseEvent e){}
-    public default void pressed(MouseEvent e){}
-    public default void released(MouseEvent e){}
-    public default void entered(MouseEvent e){}
-    public default void exited(MouseEvent e){}
+    default void dragged(MouseEvent e){}
+    default void pressed(MouseEvent e){}
+    default void released(MouseEvent e){}
+    default void entered(MouseEvent e){}
+    default void exited(MouseEvent e){}
     /**
      * Когда перемещается мышка внутри елемента и приэтом кнопки не нажаты
      * @param e 
      */
-    public default void moved(MouseEvent e){}
+    default void moved(MouseEvent e){}
     /**
      * Перетаскивание обекта
      * @param e 
      */
-    public default void draggedDetected(MouseEvent e){}
+     default void draggedDetected(MouseEvent e){}
 
     
 }

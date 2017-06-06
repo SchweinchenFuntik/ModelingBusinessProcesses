@@ -1,14 +1,21 @@
 package com.funtik.mbp;
 
-import com.funtik.mbp.elements.Element;
+import com.funtik.mbp.element.Element;
+import com.funtik.mbp.element.WorkSpace;
 import com.funtik.mbp.gui.elements.*;
+import com.funtik.mbp.util.ref.ClassRef;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 
 /**
@@ -36,25 +43,41 @@ public class Main extends Application {
     }
 
     double dx, dy;
+    boolean focus = false;
     private Pane t(){
-        Pane pane = new Pane();
+        Pane pane = new WorkSpace();
 
         LineElement l = new LineElement(100, 100, 100, 300);
+        TestLineElement tl = new TestLineElement(100, 100, 100, 300);
 
-        //l.setElementY(50);
-        //l.setElementX(50);
+//        l.setElementY(50);
+//        l.setElementX(50);
 
 //        l.setOnMouseDragged(e -> {
 //            l.setElementX(l.getElementX()+e.getX());
 //            l.setElementY(l.getElementY()+e.getY());
 //        });
 
-//        l.setOnMouseClicked(e -> {
-//            l.focus();
-//            pane.getChildren().remove(l);
-//            pane.getChildren().add(l.getFs());
+        l.setOnMouseClicked(e -> {
+            l.focus();
+            pane.getChildren().remove(l);
+            pane.getChildren().add(l.getFs());
+        });
+
+//        tl.setOnMouseClicked(e -> {
+//            tl.focus();
+//            e.consume();
 //        });
 
+        pane.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
+            if(e.getTarget() == tl && !focus){
+                focus = true;
+                tl.focus();
+            } else if(focus && e.getTarget() != tl){
+                focus = false;
+                tl.focusNot();
+            }
+        });
 
         //RectangleVBox rvb0 = new RectangleVBox();
        // rvb0.setElementX(100);
@@ -87,13 +110,19 @@ public class Main extends Application {
         xor.setLayoutX(100);
         xor.setLayoutY(150);
 
-        anchor.setLayoutX(50); anchor.setLayoutY(50);
-        anchor.setPrefSize(200, 100);
-        anchor.getStyleClass().add("border");
+        LogicalElement and = LogicalElement.createLogicalElement(LogicalElement.Operators.AND);
+        and.setElementX(300);
+        and.setElementY(400);
 
-        //System.out.println(anchor.getProperties().get("prefWidth"));
+        ArrowPoint arrowPoint = new ArrowPoint(100, 100, ArrowPoint.Type.DOUBLE_ARROW);
+        ArrowPoint arrowPoint1 = new ArrowPoint(120, 100, ArrowPoint.Type.ARROW);
 
-        pane.getChildren().addAll(anchor);
+        Arc a = new Arc(250, 250, 10, 10, 0, 180);
+        a.setStroke(Color.BLACK);
+        a.setStyle("-fx-fill: -fx-background;");
+        a.setStrokeWidth(1.5);
+
+        pane.getChildren().addAll(xor, and, arrowPoint, arrowPoint1, a);
 
         return pane;
     }

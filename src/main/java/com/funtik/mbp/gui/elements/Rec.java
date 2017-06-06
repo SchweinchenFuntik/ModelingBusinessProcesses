@@ -1,6 +1,6 @@
 package com.funtik.mbp.gui.elements;
 
-import com.funtik.mbp.elements.Element;
+import com.funtik.mbp.element.Element;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;

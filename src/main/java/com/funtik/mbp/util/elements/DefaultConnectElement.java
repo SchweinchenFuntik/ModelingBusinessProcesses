@@ -1,7 +1,7 @@
 package com.funtik.mbp.util.elements;
 
-import com.funtik.mbp.elements.ConnectElment;
-import com.funtik.mbp.elements.Element;
+import com.funtik.mbp.element.ConnectElment;
+import com.funtik.mbp.element.Element;
 
 /**
  * Created by funtik on 18.05.17.

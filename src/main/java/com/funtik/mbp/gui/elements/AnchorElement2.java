@@ -1,11 +1,8 @@
 package com.funtik.mbp.gui.elements;
 
-import com.funtik.mbp.elements.Element;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
+import com.funtik.mbp.element.Element;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -30,6 +27,7 @@ public class AnchorElement2 extends AnchorPane implements Element<AnchorPane, Ob
             updatePoint(top, bottom, 2, d/2.0, d);
             updatePoint(left, right, 2, d/2.0, 0.0);
         });
+
         prefHeightProperty().addListener((ob, ov,  nv) ->{
             double d = nv.doubleValue();
             updatePoint(top, bottom, 3, d/2.0, 0.0);

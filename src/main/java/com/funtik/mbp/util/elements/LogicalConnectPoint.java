@@ -1,6 +1,6 @@
 package com.funtik.mbp.util.elements;
 
-import com.funtik.mbp.elements.ConnectPoint;
+import com.funtik.mbp.element.ConnectPoint;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import java.util.function.Function;
@@ -14,6 +14,12 @@ public class LogicalConnectPoint implements ConnectPoint {
     private DoubleProperty x = new SimpleDoubleProperty();
     private DoubleProperty y = new SimpleDoubleProperty();
     private Function<LogicalConnectPoint, Boolean> funcLogic;
+
+    public LogicalConnectPoint(){}
+
+    public LogicalConnectPoint(Function<LogicalConnectPoint, Boolean> func){
+        funcLogic = func;
+    }
 
     @Override
     public DoubleProperty getX() {

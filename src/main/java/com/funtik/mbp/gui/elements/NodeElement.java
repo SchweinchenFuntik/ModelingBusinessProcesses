@@ -1,8 +1,8 @@
 package com.funtik.mbp.gui.elements;
 
-import com.funtik.mbp.WorkSpace;
-import com.funtik.mbp.elements.Element;
-import com.funtik.mbp.elements.FocusShell;
+import com.funtik.mbp.element.WorkSpace;
+import com.funtik.mbp.element.Element;
+import com.funtik.mbp.element.FocusShell;
 import com.funtik.mbp.util.ref.ClassRef;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -62,7 +62,27 @@ public interface NodeElement extends Element<Node, ContextMenu> {
         WorkSpace p = (WorkSpace)  parent;
         FocusShell<Group> shell = getFocusShell();
         if(shell == null) return;
-        p.getChildren().remove(getNode());
-        p.getChildren().add(shell.getShell());
+        Group g = shell.getShell();
+        g.getChildren().add(0, getNode());
+        p.getChildren().add(g);
+    }
+
+    @Override
+    default void focusNot() {
+        FocusShell<Group> shell = getFocusShell();
+        if(shell == null) return;
+        Group g = shell.getShell();
+        if(g == null) return;
+        Parent parent = g.getParent();
+        if(!(parent instanceof WorkSpace)) return;
+        WorkSpace p = (WorkSpace)  parent;
+        p.getChildren().remove(g);
+        p.getChildren().add(getNode());
+    }
+
+    @Override
+    default WorkSpace getWorkSpace() {
+        Parent p = getNode().getParent();
+        return p instanceof WorkSpace ? (WorkSpace) p:null;
     }
 }
