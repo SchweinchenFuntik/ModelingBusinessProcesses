@@ -69,8 +69,19 @@
 
 
 
+
+
+.t2:hover{
+    -fx-fill: -fx-focus-color;
+}
+
+.t2{
+    -fx-fill: -fx-background;
+}
+
+
 .t{
-    -fx-background-color: black;
+
     -fx-border-color: black;
     -fx-border-width: 1
 }

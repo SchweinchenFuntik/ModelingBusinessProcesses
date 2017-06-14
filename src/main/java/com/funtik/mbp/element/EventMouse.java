@@ -32,7 +32,7 @@ public interface EventMouse<Obj> extends Event<Obj>{
      * Перетаскивание обекта
      * @param e 
      */
-     default void draggedDetected(MouseEvent e){}
+    default void draggedDetected(MouseEvent e){}
 
     
 }

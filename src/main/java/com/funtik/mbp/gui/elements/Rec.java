@@ -6,6 +6,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -19,7 +21,7 @@ import javafx.scene.text.TextAlignment;
  * @author funtik
  * @version 0.1
  */
-public class Rec extends Group implements Element {
+public class Rec extends Group implements Element<Node, ContextMenu> {
 
 
     private double x, y;
@@ -155,5 +157,10 @@ public class Rec extends Group implements Element {
     @Override
     public void setElementHeight(double height) {
         pLeftDown.getY().setValue(pLeftTop.getY().get()+height);
+    }
+
+    @Override
+    public int compareTo(Element e) {
+        return 0;
     }
 }

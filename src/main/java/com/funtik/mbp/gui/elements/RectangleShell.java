@@ -15,20 +15,20 @@ public class RectangleShell extends FocusShellElement {
         super(element);
         width       = new ChecksDoubleProperty();
         height      = new ChecksDoubleProperty();
-        width.bind(Bindings.add(x, prefWidth));
+        width. bind(Bindings.add(x, prefWidth));
         height.bind(Bindings.add(y, prefHeight));
-        width.minProperty().bind(Bindings.add(x, 10));
+        width. minProperty().bind(Bindings.add(x, 10));
         height.minProperty().bind(Bindings.add(y, 10));
         leftTop     = new Point(x, y);
         rightTop    = new Point(width, y);
         leftDown    = new Point(x, height);
         rightDown   = new Point(width, height);
 
-        element .getWorkSpace()
-                .getEventManager()
-                .applyEventAll("Dragging", leftTop, leftDown, rightTop, rightDown);
+//        element .getWorkSpace()
+//                .getEventManager()
+//                .applyEventAll("Dragging", leftTop, leftDown, rightTop, rightDown);
 
-        super.getFocusShell(element, false, leftTop, leftDown, rightTop, rightDown);
+        super.createFocusShell(element, false, leftTop, leftDown, rightTop, rightDown);
     }
 
 }

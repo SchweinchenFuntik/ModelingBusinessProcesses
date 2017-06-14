@@ -1,6 +1,9 @@
 package com.funtik.mbp.gui.elements;
 
+import com.funtik.mbp.annotacion.AddProperty;
 import com.funtik.mbp.element.FocusShell;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Label;
@@ -13,61 +16,56 @@ import javafx.scene.text.TextAlignment;
 /**
  * Created by funtik on 31.05.17.
  */
-public class LogicalElement extends AnchorPane implements NodeElement {
+public class LogicalElement extends BaseRectangleElement {
 
     public enum Operators{AND, OR, XOR, AND_A, OR_A}
 
-    private StringProperty symbol;
-    private FocusShell shell = new FocusShellElement(this);
+    private Point beg = new Point(layoutXProperty(), layoutYProperty());
+    @AddProperty(name="asynchronous", type = boolean.class, isCreate = false)
+    private BooleanProperty asynchronous;
 
     public LogicalElement(String symbol, boolean asynchronous){
         init(symbol, asynchronous);
     }
 
     private void init(String symbol, boolean asynchronous){
-        this.symbol = new SimpleStringProperty(symbol);
+        this.asynchronous = new SimpleBooleanProperty(asynchronous);
+        text.setValue(symbol);
         Line line   = new Line();
-        Label label = new Label();
 
         line.setStrokeWidth(1.5);
-        label.setFont(new Font(20));
-        label.setTextAlignment(TextAlignment.CENTER);
-        label.textProperty().bindBidirectional(this.symbol);
-
-        StackPane st = new StackPane(label);
 
         AnchorPane.setLeftAnchor(line, 3.0);
         AnchorPane.setTopAnchor(line, 0.0);
 
-        AnchorPane.setTopAnchor(st, 0.0);
-        AnchorPane.setBottomAnchor(st, 0.0);
-
-        getStyleClass().add("border");
+        AnchorPane.setTopAnchor(textPane, 0.0);
+        AnchorPane.setBottomAnchor(textPane, 0.0);
 
         if(asynchronous || symbol.equals("X")) {
-            AnchorPane.setLeftAnchor(st, 7.5);
-            AnchorPane.setRightAnchor(st, 3.0);
+            AnchorPane.setLeftAnchor(textPane, 7.5);
+            AnchorPane.setRightAnchor(textPane, 3.0);
             heightProperty().addListener((observable, ov, nv) ->
                     line.setEndY(nv.doubleValue()-6));
-            getChildren().addAll(line, st);
+            getChildren().addAll(line, textPane);
         } else {
             Line l = new Line();
             l.setStrokeWidth(1.5);
             AnchorPane.setTopAnchor(l, 0.0);
             AnchorPane.setRightAnchor(l, 3.0);
-            AnchorPane.setLeftAnchor(st, 7.5);
-            AnchorPane.setRightAnchor(st, 7.5);
+            AnchorPane.setLeftAnchor(textPane, 7.5);
+            AnchorPane.setRightAnchor(textPane, 7.5);
             heightProperty().addListener((observable, ov, nv) -> {
                 line.setEndY(nv.doubleValue()-5.5);
                 l.setEndY(nv.doubleValue()-5.5);
             });
-            getChildren().addAll(line, st, l);
+            getChildren().addAll(line, textPane, l);
         }
         createShell();
     }
 
     private void createShell(){
-
+        shell = new FocusShellElement(this);
+        shell.createFocusShell(this, false, beg);
     }
 
     @Override
@@ -86,4 +84,9 @@ public class LogicalElement extends AnchorPane implements NodeElement {
         return null;
     }
 
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName()+" x="+getLayoutX() + "\ty="+getLayoutY();
+    }
 }

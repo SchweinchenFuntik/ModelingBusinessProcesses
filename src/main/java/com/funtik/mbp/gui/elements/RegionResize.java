@@ -6,6 +6,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
@@ -15,7 +17,7 @@ import javafx.scene.shape.Line;
  * @author funtik
  * @version 0.1
  */
-public class RegionResize extends Group implements Element {
+public class RegionResize extends Group implements Element<Node, ContextMenuEvent> {
 
     public DoubleProperty width, height;
     private double x, y;
@@ -123,5 +125,10 @@ public class RegionResize extends Group implements Element {
     @Override
     public void setElementHeight(double height) {
         pLeftDown.getY().setValue(pLeftTop.getY().get()+height);
+    }
+
+    @Override
+    public int compareTo(Element e) {
+        return 0;
     }
 }

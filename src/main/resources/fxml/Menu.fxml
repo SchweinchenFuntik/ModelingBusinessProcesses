@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<MenuBar fx:id="menu"  xmlns:fx="http://javafx.com/fxml/1" 
-         fx:controller="com.funtik.mbp.controller.Menu">
-    <Menu text="%menu.file" mnemonicParsing="false">
-        <MenuItem text="%menu.file.new"  mnemonicParsing="false"/>
-        <MenuItem text="%menu.file.open"   mnemonicParsing="false"/>
-        <MenuItem text="%menu.file.close" mnemonicParsing="false"/>
-        <MenuItem text="%menu.file.save" mnemonicParsing="false"/>
+<MenuBar fx:id="menuBar"  xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="com.funtik.mbp.controller.MenuController">
+    <Menu text="%menu.file" mnemonicParsing="false" fx:id="menu">
+        <MenuItem text="%menu.file.new"  mnemonicParsing="false" onAction="#menuActionNew"/>
+        <MenuItem text="%menu.file.open"   mnemonicParsing="false" onAction="#menuActionOpen"/>
+        <MenuItem text="%menu.file.close" mnemonicParsing="false" onAction="#menuActionClose"/>
+        <MenuItem text="%menu.file.save" mnemonicParsing="false" onAction="#menuActionSave"/>
         <MenuItem text="%menu.file.save_as" mnemonicParsing="false"/>
-        <MenuItem text="%menu.file.save_all" mnemonicParsing="false"/>
         <MenuItem text="%menu.file.print" mnemonicParsing="false"/>
-        <MenuItem text="%menu.file.export" mnemonicParsing="false"/>
-        <MenuItem text="%menu.file.import" mnemonicParsing="false"/>
     </Menu>
     <Menu text="%menu.edit" mnemonicParsing="false">
         <MenuItem text="%menu.edit.copy_picture" mnemonicParsing="false"/>
@@ -28,24 +21,8 @@
         <MenuItem text="%menu.edit.diagram" mnemonicParsing="false"/>
         <MenuItem text="%menu.edit.delete_diagram" mnemonicParsing="false"/>
     </Menu>
-    <Menu text="%menu.view" mnemonicParsing="false">
-        <MenuItem text="%menu.view.standart" mnemonicParsing="false"/>
-        <MenuItem text="%menu.view.model" mnemonicParsing="false"/>
-        <MenuItem text="%menu.view.model_mart" mnemonicParsing="false"/>
-        <MenuItem text="%menu.view.model_explorer" mnemonicParsing="false"/>
-        <MenuItem text="%menu.view.status" mnemonicParsing="false"/>
-    </Menu>
-    <Menu text="%menu.diagram" mnemonicParsing="false">
-        <MenuItem text="%menu.diagram.property" mnemonicParsing="false"/>
-        <SeparatorMenuItem/>
-        <MenuItem text="%menu.diagram.manager" mnemonicParsing="false"/>
-        <SeparatorMenuItem/>
-        <MenuItem text="%menu.diagram.swim_lane" mnemonicParsing="false"/>
-        <MenuItem text="%menu.diagram.org_chart" mnemonicParsing="false"/>
-        <MenuItem text="%menu.diagram.node_tree" mnemonicParsing="false"/>
-        <MenuItem text="%menu.diagram.feo" mnemonicParsing="false"/>
-        <MenuItem text="%menu.diagram.idef3" mnemonicParsing="false"/>
-    </Menu>
+    <!--<Menu text="%menu.view" mnemonicParsing="false">-->
+    <!--</Menu>-->
     <Menu text="%menu.dictionany" mnemonicParsing="false">
         <MenuItem text="%menu.dictionany.activity" mnemonicParsing="false"/>
         <MenuItem text="%menu.dictionany.arrow" mnemonicParsing="false"/>
@@ -65,42 +42,6 @@
         <SeparatorMenuItem/>
         <MenuItem text="%menu.dictionany.bitmaps" mnemonicParsing="false"/>
     </Menu>
-    <Menu text="%menu.model" mnemonicParsing="false">
-        <MenuItem text="%menu.model.property" mnemonicParsing="false"/>
-        <SeparatorMenuItem/>
-        <MenuItem text="%menu.model.arrow_data"  mnemonicParsing="false"/>
-        <MenuItem text="%menu.model.merge_model" mnemonicParsing="false"/>
-        <SeparatorMenuItem/>
-        <MenuItem text="%menu.model.model_property" mnemonicParsing="false"/>
-        <SeparatorMenuItem/>
-        <Menu text="%menu.model.def_arrow_types" mnemonicParsing="false">
-            <MenuItem text="%menu.model.def_arrow_types.precedence" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_arrow_types.relational" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_arrow_types.obj_flow" mnemonicParsing="false"/>
-        </Menu>
-        <Menu text="%menu.model.def_fonts">
-            <MenuItem text="%menu.model.def_fonts.con_act" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.con_act" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.con_arrow" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.dec_act" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.dec_arrow" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.node_tree" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.frame_user" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.frame_system" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.blocks" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.parent_diagram" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.parent_diagram_title" mnemonicParsing="false"/>
-            <MenuItem text="%menu.model.def_fonts.report" mnemonicParsing="false"/>
-        </Menu>
-        <SeparatorMenuItem/>
-        <MenuItem text="%menu.model.diagram_obj_editor" mnemonicParsing="false"/>
-        <MenuItem text="%menu.model.arrow_editor" mnemonicParsing="false"/>
-        <MenuItem text="%menu.model.atribute_editor" mnemonicParsing="false"/>
-        <MenuItem text="%menu.model.udp_def_editor" mnemonicParsing="false"/>
-        <MenuItem text="%menu.model.cost_center_editor" mnemonicParsing="false"/>
-    </Menu>
-    <Menu text="%menu.mode_mart" mnemonicParsing="false"/>
     <Menu text="%menu.tools" mnemonicParsing="false"/>
-    <Menu text="%menu.windows" mnemonicParsing="false"/>
     <Menu text="%menu.help" mnemonicParsing="false"/>
 </MenuBar>

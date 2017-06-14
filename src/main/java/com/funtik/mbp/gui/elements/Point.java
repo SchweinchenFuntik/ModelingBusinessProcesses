@@ -1,10 +1,12 @@
 package com.funtik.mbp.gui.elements;
 
+import com.funtik.mbp.annotacion.AddProperty;
 import com.funtik.mbp.element.ConnectPoint;
 import com.funtik.mbp.element.Element;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -22,7 +24,9 @@ public class Point extends StackPane implements NodeElement, ConnectPoint {
 
     protected SimpleObjectProperty<Shape> shape;
     protected static SimpleDoubleProperty szToCenterClass = new SimpleDoubleProperty(4);
+    @AddProperty(name="xCenter", isCreate = false, type = Double.class)
     protected DoubleProperty xCenter;
+    @AddProperty(name="yCenter", isCreate = false, type = Double.class)
     protected DoubleProperty yCenter;
     protected DoubleProperty szToCenter; // реализовать уникальный размер
     protected BooleanProperty isDefSize;
@@ -61,7 +65,6 @@ public class Point extends StackPane implements NodeElement, ConnectPoint {
             else szToCenter.unbind();
         });
 
-        setLayoutX(x); setLayoutY(y);
         shape.addListener((observable, ov, nv) -> {
             if(ov.equals(nv)) return;
             ObservableList<Node> ch = getChildren();
@@ -77,18 +80,13 @@ public class Point extends StackPane implements NodeElement, ConnectPoint {
                 ((Rectangle) s).widthProperty().bind(nb);
             }
         }
-
         getChildren().add(shape.get());
 
         layoutXProperty().bind(Bindings.subtract(this.xCenter, szToCenter));
         layoutYProperty().bind(Bindings.subtract(this.yCenter, szToCenter));
 
-        szToCenter.addListener((observable, ov, nv) -> {
-            double sz = nv.doubleValue() - ov.doubleValue();
-            if(sz==0) return;
-            xCenter.set(xCenter.get()+sz);
-            yCenter.set(yCenter.get()+sz);
-        });
+        szToCenter.addListener(updateCenter);
+        this.xCenter.setValue(x); this.yCenter.setValue(y);
     }
 
     public void setPointShape(Shape s){
@@ -125,7 +123,6 @@ public class Point extends StackPane implements NodeElement, ConnectPoint {
         xCenter.set(x+sz);
     }
 
-    @Override
     public void setElementY(double y) {
         double sz = szToCenter.get();
         yCenter.set(y+sz);
@@ -144,5 +141,16 @@ public class Point extends StackPane implements NodeElement, ConnectPoint {
     }
 
     public static DoubleProperty szToCenterProperty(){ return szToCenterClass; } ///???????
+
+    protected void removeUpdateCenter(){
+        szToCenter.removeListener(updateCenter);
+    }
+
+    private ChangeListener<Number> updateCenter = (observable, ov, nv) -> {
+        double sz = nv.doubleValue() - ov.doubleValue();
+        if(sz==0) return;
+        xCenter.set(xCenter.get()+sz);
+        yCenter.set(yCenter.get()+sz);
+    };
 
 }

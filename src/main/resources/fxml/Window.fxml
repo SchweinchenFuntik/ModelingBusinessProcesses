@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.SplitPane?>
+<?import com.funtik.mbp.element.WorkSpace?>
+<?import com.funtik.mbp.gui.MinimalPropertySheet?>
+<?import com.funtik.mbp.gui.DiagramTreeView?>
+
+
+<?import javafx.scene.control.ScrollPane?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.funtik.mbp.controller.Window">
+
+    <top>
+        <VBox fx:id="top">
+            <fx:include source="Menu.fxml" />
+            <!--<fx:include source="ToolBar.fxml" />-->
+        </VBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.17, 0.73, 0.1">
+
+            <DiagramTreeView editable="true" expanded="true" fx:id="diagrams"/>
+            <ScrollPane fx:id="scroll">
+                <WorkSpace fx:id="workSpace" />
+            </ScrollPane>
+            <MinimalPropertySheet modeSwitcherVisible="false" fx:id="property"/>
+
+        </SplitPane>
+    </center>
+
+
+
+</BorderPane>

@@ -7,19 +7,60 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <BorderPane>
-        <left><Label text="%dialog.CreateProject.name"/></left>
-        <right><TextField/></right>
-    </BorderPane>
-       
-    <RadioButton mnemonicParsing="false" selected="true" text="#getName">
-        <toggleGroup><ToggleGroup fx:id="rgGp1"/></toggleGroup>
-    </RadioButton>
-    <RadioButton mnemonicParsing="false" text="RadioButton" toggleGroup="$rgGp1" />
-    <RadioButton mnemonicParsing="false" text="RadioButton" toggleGroup="$rgGp1" />
+
+<VBox spacing="5.0" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.funtik.mbp.gui.Dialogs" >
+
+    <fx:define>
+        <ToggleGroup fx:id="rgGp1"/>
+    </fx:define>
+
+    <GridPane hgap="7" vgap="5" >
+        <Label          text="%dialog.CreateProject.name"
+                        GridPane.columnIndex="0"
+                        GridPane.rowIndex="0"/>
+
+        <TextField      fx:id="tfProjectName"
+                        GridPane.columnIndex="1"
+                        GridPane.rowIndex="0"/>
+
+        <Label          text="%dialog.CreateProject.author"
+                        GridPane.columnIndex="0"
+                        GridPane.rowIndex="1"/>
+
+        <TextField      fx:id="tfAuthor"
+                        GridPane.columnIndex="1"
+                        GridPane.rowIndex="1"/>
+
+        <Separator      GridPane.columnIndex="0"
+                        GridPane.rowIndex="2"
+                        GridPane.columnSpan="2"/>
+
+        <RadioButton    mnemonicParsing="false"
+                        selected="true"
+                        text="%diagram.type.idef0"
+                        toggleGroup="$rgGp1"
+                        fx:id="rbIDEF0"
+                        GridPane.columnIndex="0"
+                        GridPane.rowIndex="3"/>
+
+        <RadioButton    mnemonicParsing="false"
+                        text="%diagram.type.idef3"
+                        toggleGroup="$rgGp1"
+                        fx:id="rbDFD"
+                        GridPane.columnIndex="0"
+                        GridPane.rowIndex="4"/>
+
+        <RadioButton    mnemonicParsing="false"
+                        text="%diagram.type.dfd"
+                        toggleGroup="$rgGp1"
+                        fx:id="rbIDEF3"
+                        GridPane.columnIndex="0"
+                        GridPane.rowIndex="5"/>
+    </GridPane>
     
     <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+        <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
     </padding>
 </VBox>

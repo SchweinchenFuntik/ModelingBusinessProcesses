@@ -1,5 +1,6 @@
 package com.funtik.mbp.gui.elements;
 
+import com.funtik.mbp.annotacion.AddProperty;
 import com.funtik.mbp.element.FocusShell;
 import com.funtik.mbp.util.Direction;
 import javafx.beans.Observable;
@@ -7,6 +8,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
+import javafx.scene.control.RadioButton;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
@@ -18,13 +20,26 @@ import java.util.Iterator;
  * Created by funtik on 03.06.17.
  */
 public class RegionRotate extends Region implements NodeElement {
-    protected DoubleProperty widthRegion   = new SimpleDoubleProperty(8);
+    @AddProperty(name="widthRegion", isCreate = false, type = Double.class)
+    protected DoubleProperty widthRegion;
+
+
     protected EnumSet<Direction> directions;
     protected Rotate rotate;
     protected Shape shape;
     protected FocusShell<Group> shell;
 
-    protected DoubleProperty begX, begY, endX, endY;
+    @AddProperty(name="begX", isCreate = false, type = Double.class)
+    protected DoubleProperty begX;
+
+    @AddProperty(name="begY", isCreate = false, type = Double.class)
+    protected DoubleProperty begY;
+
+    @AddProperty(name="endX", isCreate = false, type = Double.class)
+    protected DoubleProperty endX;
+
+    @AddProperty(name="endY", isCreate = false, type = Double.class)
+    protected DoubleProperty endY;
 
     protected void init(double begX, double begY, double endX, double endY, double widthRegion, Shape shape){
         this.shape          = shape;
@@ -33,7 +48,7 @@ public class RegionRotate extends Region implements NodeElement {
         this.begY           = new SimpleDoubleProperty();
         this.endX           = new SimpleDoubleProperty();
         this.endY           = new SimpleDoubleProperty();
-        this.widthRegion    = new SimpleDoubleProperty(widthRegion);
+        this.widthRegion    = new SimpleDoubleProperty(widthRegion < 0 ? 8:widthRegion);
 
         getTransforms().add(rotate);
         prefWidthProperty().bind(this.widthRegion);
@@ -115,6 +130,9 @@ public class RegionRotate extends Region implements NodeElement {
         updateRegion(begX.get(), begY.get(), endX, endY);
     }
 
+    public DoubleProperty rotateTProperty() {
+        return rotate.angleProperty();
+    }
 
     @Override
     public void setElementX(double x) {

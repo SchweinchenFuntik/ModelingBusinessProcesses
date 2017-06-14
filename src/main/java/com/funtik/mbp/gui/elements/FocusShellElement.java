@@ -21,11 +21,11 @@ public class FocusShellElement implements FocusShell<Group>{
 
     public FocusShellElement(@NotNull NodeElement el, ConnectPoint... points){
         element = el;
-        getFocusShell(el, false, points);
+        createFocusShell(el, false, points);
     }
 
     @Override
-    public Group getFocusShell(Element el, boolean isCreateGUI, ConnectPoint... points) {
+    public Group createFocusShell(Element el, boolean isCreateGUI, ConnectPoint... points) {
         if(el == null) return null;
         if(group == null) group = new Group();
         ObservableList children = group.getChildren();

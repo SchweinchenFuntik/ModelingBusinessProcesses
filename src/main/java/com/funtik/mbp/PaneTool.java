@@ -42,9 +42,9 @@ public class PaneTool {
         try {
             pane = load.load();
             HASH.put(name, load.getController());
-        } catch (IOException ex) {
-            //MainApp.LOG.error(ex.getMessage());
-        }    
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return pane;
     }
     
@@ -69,7 +69,8 @@ public class PaneTool {
     public static Dialog createDialogFXML(String name, ResourceBundle rb, ButtonType... b){
         return createDialogFXML(name, -1, -1, rb, b);
     }
-    
+
+    // ??
     public static Dialog createDialogFXML(String name, double w, double h, ResourceBundle rb, ButtonType... b){
         Dialog d = new Dialog();
         //d.getDialogPane().setContent(PaneTool.loadPane(name, MainApp.getNameLocale()));

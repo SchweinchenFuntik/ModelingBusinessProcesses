@@ -8,5 +8,5 @@ import javafx.scene.input.KeyEvent;
  */
 public interface EventKey<Obj> extends Event<Obj> {
     default void pressed(KeyEvent e){}
-    default void realesed(KeyEvent e){}
+    default void released(KeyEvent e){}
 }

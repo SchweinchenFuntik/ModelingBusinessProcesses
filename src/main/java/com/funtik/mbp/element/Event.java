@@ -13,7 +13,6 @@ public interface Event<Obj> {
     default void applyAll(Element... elements){
         for (Element el:elements) apply(el);
     }
-
     default void unApplyAll(Element... elements){
         for (Element el:elements) unApply(el);
     }

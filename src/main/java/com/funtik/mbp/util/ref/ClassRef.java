@@ -1,14 +1,9 @@
 package com.funtik.mbp.util.ref;
 
-import com.sun.istack.internal.NotNull;
-
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
-import java.lang.reflect.AnnotatedElement;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -70,7 +65,16 @@ public class ClassRef {
         return null;
     }
 
-
+    public static Object createObject(Class clazz){
+        try {
+            return clazz.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
 
@@ -127,10 +131,19 @@ public class ClassRef {
     }
     
     public static boolean isInterface(Class c, Class i){
-        Class [] interf = c.getInterfaces();
-        for(Class cl:interf) if(cl==i) return true;
+        Class [] interfaces = c.getInterfaces();
+        for(Class cl:interfaces) if(cl==i) return true;
         Class s = c.getSuperclass();
         return s != Object.class && isInterface(s, i);
+    }
+
+    public static boolean isInterface2(Class c, Class i){
+        Class [] interfaces = c.getInterfaces();
+        for(Class cl:interfaces)
+            if(cl==i) return true;
+            else if(isInterface2(cl, i)) return true;
+        Class s = c.getSuperclass();
+        return s != null && isInterface2(s, i);
     }
 
     public static boolean isClass(Class c, Class search){
@@ -140,7 +153,7 @@ public class ClassRef {
         return sp != null && isClass(sp, search);
     }
 
-    public static Method getMethod(String name, Class c, Class returnType, @NotNull Class... paramType){
+    public static Method getMethod(String name, Class c, Class returnType, Class... paramType){
         Method [] methods = c.getDeclaredMethods();
         for(Method m:methods)
             if(m.getName().equals(name))

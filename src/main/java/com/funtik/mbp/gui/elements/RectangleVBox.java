@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -16,7 +17,7 @@ import javafx.scene.text.TextAlignment;
  * Created by funtik on 03.05.17.
  * много чего перепичывать
  */
-public class RectangleVBox extends Group implements Element {
+public class RectangleVBox extends Group implements Element<Node, ContextMenu> {
     private static final String baseText = "Rectangle";
     private static int ID = 0;
 
@@ -144,5 +145,11 @@ public class RectangleVBox extends Group implements Element {
     @Override
     public void setElementY(double y) {
         pLeftTop.getY().setValue(y);
+    }
+
+
+    @Override
+    public int compareTo(Element e) {
+        return 0;
     }
 }

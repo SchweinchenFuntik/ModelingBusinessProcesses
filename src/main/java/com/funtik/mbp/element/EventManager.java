@@ -1,7 +1,12 @@
 package com.funtik.mbp.element;
 
+import com.funtik.mbp.event.Default;
 import com.funtik.mbp.event.Dragging;
 import com.funtik.mbp.util.functions.Func;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,13 +19,19 @@ import java.util.Map;
  */
 public class EventManager {
     private Event def;
+    private Event current; ///????
     private HashMap<String, Event> events = new HashMap<>();
-    private HashMap<String, Func> apply;// ???? +--+-+-
     private ArrayList<String> eventsNames; //????
-    private ArrayList serviceElements;
+    private ObservableList<Element> serviceElements = FXCollections.observableArrayList();
+    private WorkSpace workSpace;
 
     public EventManager(){
+        def = new Default();
+        current = def;
         events.put("Dragging", new Dragging());
+        events.put("Default", def);
+
+        serviceElements.addListener(this::addElement);
     }
     public EventManager(Event def){}
     public void addEvent(String name, Event e){
@@ -52,6 +63,15 @@ public class EventManager {
             Class cl = Class.forName(s);
             if(cl.isPrimitive() || cl.isAnnotation() || cl.isInterface()) return;
             events.put(s, (Event)cl.newInstance());
+        }
+    }
+
+    public void addElement(ListChangeListener.Change<? extends Element> c){
+        if(c.wasAdded()){
+            c.getAddedSubList().forEach(o -> {
+                def.apply(o);
+                current.apply(o);
+            });
         }
     }
 }

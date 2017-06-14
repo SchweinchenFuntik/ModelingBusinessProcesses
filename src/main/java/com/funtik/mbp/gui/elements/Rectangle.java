@@ -7,7 +7,9 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
@@ -23,7 +25,7 @@ import javafx.scene.text.Text;
  */
 // Region and layoutBounds поробывать
 // написать что бы Anchor проходил по своим елеентам и вычислялль width and height
-public class Rectangle extends Group implements Element {
+public class Rectangle extends Group implements Element<Node, ContextMenu> {
     private static final String baseText = "Rectangle";
     private static int ID = 0;
 
@@ -169,5 +171,10 @@ public class Rectangle extends Group implements Element {
     public void focus() {
         pLeftTop.setVisible(true); pLeftDown.setVisible(true);
         pRightTop.setVisible(true); pRightDown.setVisible(true);
+    }
+
+    @Override
+    public int compareTo(Element e) {
+        return 0;
     }
 }
