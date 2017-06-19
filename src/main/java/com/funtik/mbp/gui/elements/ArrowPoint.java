@@ -1,9 +1,8 @@
 package com.funtik.mbp.gui.elements;
 
 import com.funtik.mbp.element.ConnectPoint;
-import com.funtik.mbp.util.elements.LogicalConnectPoint;
+import com.funtik.mbp.util.LogicalConnectPoint;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;

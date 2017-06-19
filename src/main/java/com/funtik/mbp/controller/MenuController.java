@@ -30,11 +30,11 @@ public class MenuController implements Initializable {
 
     public void menuActionNew() throws IOException {
         Project p = Main.getSettings().project.get();
-        if(p != null && p.isEdit()) Dialogs.createCloseIsSave(p);
+        if(p != null && p.isEdit()) if(!Dialogs.createCloseIsSave(p)) return;
         Project tmpP = Dialogs.createNewProject(rb);
         if(tmpP == null) return;
-        Main.getSettings().project.setValue(tmpP);
         tmpP.setEdit(true);
+        Main.getSettings().project.setValue(tmpP);
     }
 
     public void menuActionOpen() throws JDOMException, IOException {
@@ -43,8 +43,8 @@ public class MenuController implements Initializable {
         Project p = Main.getSettings().project.get();
         if(p != null && p.isEdit()) if(!Dialogs.createCloseIsSave(p)) return;
         p = new Project();
-        p.Load(f);
-        System.out.println("Ok");
+        if(p.Load(f));
+        else ;// LOG""
     }
 
     public void menuActionSave() throws IOException {

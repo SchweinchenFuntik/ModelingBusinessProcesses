@@ -12,15 +12,15 @@
         <MenuItem text="%menu.file.save_as" mnemonicParsing="false"/>
         <MenuItem text="%menu.file.print" mnemonicParsing="false"/>
     </Menu>
-    <Menu text="%menu.edit" mnemonicParsing="false">
-        <MenuItem text="%menu.edit.copy_picture" mnemonicParsing="false"/>
-        <MenuItem text="%menu.edit.delete" mnemonicParsing="false"/>
-        <MenuItem text="%menu.edit.rename" mnemonicParsing="false"/>
-        <MenuItem text="%menu.edit.paste" mnemonicParsing="false"/>
-        <MenuItem text="%menu.edit.activity" mnemonicParsing="false"/>
-        <MenuItem text="%menu.edit.diagram" mnemonicParsing="false"/>
-        <MenuItem text="%menu.edit.delete_diagram" mnemonicParsing="false"/>
-    </Menu>
+    <!--<Menu text="%menu.edit" mnemonicParsing="false">-->
+        <!--<MenuItem text="%menu.edit.copy_picture" mnemonicParsing="false"/>-->
+        <!--<MenuItem text="%menu.edit.delete" mnemonicParsing="false"/>-->
+        <!--<MenuItem text="%menu.edit.rename" mnemonicParsing="false"/>-->
+        <!--<MenuItem text="%menu.edit.paste" mnemonicParsing="false"/>-->
+        <!--<MenuItem text="%menu.edit.activity" mnemonicParsing="false"/>-->
+        <!--<MenuItem text="%menu.edit.diagram" mnemonicParsing="false"/>-->
+        <!--<MenuItem text="%menu.edit.delete_diagram" mnemonicParsing="false"/>-->
+    <!--</Menu>-->
     <!--<Menu text="%menu.view" mnemonicParsing="false">-->
     <!--</Menu>-->
     <Menu text="%menu.dictionany" mnemonicParsing="false">
@@ -28,20 +28,10 @@
         <MenuItem text="%menu.dictionany.arrow" mnemonicParsing="false"/>
         <MenuItem text="%menu.dictionany.data_store" mnemonicParsing="false"/>
         <MenuItem text="%menu.dictionany.ext_reference" mnemonicParsing="false"/>
-        <MenuItem text="%menu.dictionany.junction" mnemonicParsing="false"/>
         <MenuItem text="%menu.dictionany.referent" mnemonicParsing="false"/>
-        <SeparatorMenuItem/>
         <MenuItem text="%menu.dictionany.attribute" mnemonicParsing="false"/>
         <MenuItem text="%menu.dictionany.cost_center" mnemonicParsing="false"/>
-        <MenuItem text="%menu.dictionany.entity" mnemonicParsing="false"/>
-        <MenuItem text="%menu.dictionany.resourse" mnemonicParsing="false"/>
-        <MenuItem text="%menu.dictionany.role" mnemonicParsing="false"/>
-        <MenuItem text="%menu.dictionany.role_grup" mnemonicParsing="false"/>
-        <MenuItem text="%menu.dictionany.udp" mnemonicParsing="false"/>
-        <MenuItem text="%menu.dictionany.udp_key" mnemonicParsing="false"/>
-        <SeparatorMenuItem/>
-        <MenuItem text="%menu.dictionany.bitmaps" mnemonicParsing="false"/>
     </Menu>
-    <Menu text="%menu.tools" mnemonicParsing="false"/>
+    <!--<Menu text="%menu.tools" mnemonicParsing="false"/>-->
     <Menu text="%menu.help" mnemonicParsing="false"/>
 </MenuBar>

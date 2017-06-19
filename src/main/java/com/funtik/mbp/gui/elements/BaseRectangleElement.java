@@ -2,9 +2,7 @@ package com.funtik.mbp.gui.elements;
 
 import com.funtik.mbp.annotacion.AddProperty;
 import com.funtik.mbp.element.FocusShell;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -23,23 +21,32 @@ public class BaseRectangleElement extends AnchorPane implements NodeElement {
     protected FocusShell shell;
     private ArrayList<Polygon> directs;
     private boolean applyDirection = false;
+    protected DoubleProperty sizeText = new SimpleDoubleProperty(10);
     protected StackPane textPane;
-    @AddProperty(name="text", type = Integer.class, isCreate = false)
+    @AddProperty(name="text", type = String.class, isCreate = false)
     protected StringProperty text;
     @AddProperty(name="id", type = Integer.class, isCreate = false)
     protected IntegerProperty id;
+    protected double dx = 5, dy = 5;
+    protected DoubleProperty dtText = new SimpleDoubleProperty();
 
     public BaseRectangleElement(){
         top         = createPolygon(false);
         left        = createPolygon(false);
         bottom      = createPolygon(true);
         right       = createPolygon(true);
+        id          = new SimpleIntegerProperty();
         directs     = new ArrayList<>();
         text        = new SimpleStringProperty();
         Label label = new Label();
         textPane    = new StackPane(label);
 
-        label.setFont(new Font(20));
+        sizeText.addListener((ob, ov, nv) -> {
+            if(nv.doubleValue() == ov.doubleValue()) return;
+            label.setFont(new Font(nv.doubleValue()));
+        });
+
+        //label.setFont(new Font(20));
         label.setTextAlignment(TextAlignment.CENTER);
         label.textProperty().bindBidirectional(this.text);
 
@@ -47,29 +54,36 @@ public class BaseRectangleElement extends AnchorPane implements NodeElement {
         directs.add(bottom);    directs.add(right);
 
         widthProperty().addListener((ob, ov, nv) ->{
-            double d = nv.doubleValue() - 2;
+            double d = nv.doubleValue() - dx;
             updatePoint(top, bottom, 2, d/2.0, d);
             updatePoint(left, right, 2, d/2.0, 0.0);
         });
 
         heightProperty().addListener((ob, ov,  nv) ->{
-            double d = nv.doubleValue() - 2;
+            double d = nv.doubleValue() - dy;
             updatePoint(top, bottom, 3, d/2.0, 0.0);
             updatePoint(left, right, 3, d/2.0, d);
+        });
+
+        dtText.addListener((ob, ov, nv) -> {
+            AnchorPane.setTopAnchor(textPane, dtText.get());
+            AnchorPane.setBottomAnchor(textPane, dtText.get());
+            AnchorPane.setLeftAnchor(textPane, dtText.get());
+            AnchorPane.setRightAnchor(textPane, dtText.get());
         });
 
         setAnchor(top,      0.0, 0.0, null, null);
         setAnchor(left,     0d, 0d, null, null);
         setAnchor(bottom,   null, 0.0, 0.0, null);
         setAnchor(right,    0d, null, null, 0d);
-        getChildren().addAll(top, left, bottom, right);
+        getChildren().addAll(top, left, bottom, right, textPane);
 
         getStyleClass().add("border");
     }
 
     public void setApplyDirection(boolean isApply){
         if(isApply) {
-            applyDirection= true;
+            applyDirection = true;
             top.toFront();      left.toFront();
             bottom.toFront();   right.toFront();
         } else {
@@ -119,4 +133,24 @@ public class BaseRectangleElement extends AnchorPane implements NodeElement {
         obj = p;
     }
 
+    public int getIdElement() {
+        return id.get();
+    }
+
+    public String getText() {
+        return text.get();
+    }
+
+    public StringProperty textProperty() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text.set(text);
+    }
+
+    @Override
+    public String toString() {
+        return text.get();
+    }
 }

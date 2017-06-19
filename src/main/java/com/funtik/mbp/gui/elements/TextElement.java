@@ -2,7 +2,7 @@ package com.funtik.mbp.gui.elements;
 
 import com.funtik.mbp.element.ConnectPoint;
 import com.funtik.mbp.util.Direction;
-import com.funtik.mbp.util.elements.LogicalConnectPoint;
+import com.funtik.mbp.util.LogicalConnectPoint;
 import javafx.beans.binding.Bindings;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -30,8 +30,16 @@ public class TextElement extends StackPane implements NodeElement {
     private double dx = 0, dy = 0;
 
     public TextElement(String text){
-        getStyleClass().add("border");
+        getStyleClass().add("textElement");
         this.text = new Text(text);
+        getChildren().add(this.text);
+        point.getX().bind(Bindings.add(layoutXProperty(), dx));
+        point.getY().bind(Bindings.add(layoutYProperty(), dy));
+    }
+
+    public TextElement(){
+        getStyleClass().add("textElement");
+        this.text = new Text();
         getChildren().add(this.text);
         point.getX().bind(Bindings.add(layoutXProperty(), dx));
         point.getY().bind(Bindings.add(layoutYProperty(), dy));

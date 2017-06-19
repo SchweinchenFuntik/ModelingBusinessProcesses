@@ -4,21 +4,18 @@ import com.funtik.mbp.annotacion.AddProperty;
 import com.funtik.mbp.element.FocusShell;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 
 /**
  * Created by funtik on 31.05.17.
  */
 public class LogicalElement extends BaseRectangleElement {
+    private static int ID = 0;
 
     public enum Operators{AND, OR, XOR, AND_A, OR_A}
+   // @AddProperty(name="name", type = TextElement.class, isCreate = false, XmlData = XmlData.Type.CONTENT)
+   // public TextElement name;
 
     private Point beg = new Point(layoutXProperty(), layoutYProperty());
     @AddProperty(name="asynchronous", type = boolean.class, isCreate = false)
@@ -29,9 +26,11 @@ public class LogicalElement extends BaseRectangleElement {
     }
 
     private void init(String symbol, boolean asynchronous){
+        sizeText.setValue(20);
         this.asynchronous = new SimpleBooleanProperty(asynchronous);
         text.setValue(symbol);
         Line line   = new Line();
+     //   name = new TextElement('J'+String.valueOf(ID++));
 
         line.setStrokeWidth(1.5);
 
@@ -60,7 +59,8 @@ public class LogicalElement extends BaseRectangleElement {
             });
             getChildren().addAll(line, textPane, l);
         }
-        createShell();
+       // getStyleClass().add("logicalElement");
+      //  createShell();
     }
 
     private void createShell(){

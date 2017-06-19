@@ -22,6 +22,8 @@ public class Converters {
             return new DoubleStringConverter();
         if(clazz == Float.class || clazz == float.class)
             return new FloatStringConverter();
+        if(ClassRef.isClass(clazz, Enum.class))
+            return new EnumStringConverter(clazz);
         return null;
     }
 
@@ -39,7 +41,6 @@ public class Converters {
     }
 
     public static XmlData getXmlDataElement(Class clazz){
-//        System.out.println(ClassRef.isInterface2(clazz, Element.class));
         if(ClassRef.isInterface2(clazz, Element.class))
             return ElementModel.getElementModel(clazz, cl ->  (Element) ClassRef.createObject(clazz));
         return null;

@@ -14,9 +14,13 @@ import java.util.List;
  */
 public class Cost extends PropertiesBase<Cost> {
     @AddProperty(name="name")
-    private StringProperty name;
+    private SimpleStringProperty name;
     @AddProperty(name="definition")
-    private DoubleProperty definition;
+    private SimpleDoubleProperty definition;
+
+    public Cost(){
+        super();
+    }
 
     public void setName(String name){
         this.name.setValue(name);
@@ -34,4 +38,10 @@ public class Cost extends PropertiesBase<Cost> {
         return definition.get();
     }
 
+    @Override
+    public String toString() {
+        return "Cost[name=" + (name == null ? "":name.get())+" definition="
+                +(definition == null ? String.valueOf(0d):definition.get())+"]";
+    }
 }
+

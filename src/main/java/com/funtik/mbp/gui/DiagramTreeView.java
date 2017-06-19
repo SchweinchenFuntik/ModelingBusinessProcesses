@@ -1,22 +1,30 @@
 package com.funtik.mbp.gui;
 
+import com.funtik.mbp.PaneTool;
+import com.funtik.mbp.controller.Window;
+import com.funtik.mbp.element.Event;
+import com.funtik.mbp.gui.elements.Rectangle;
+import com.funtik.mbp.model.Diagram;
+import com.funtik.mbp.util.Settings;
 import javafx.collections.ListChangeListener;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+
+import java.io.IOException;
 
 /**
  * Created by funtik on 11.06.17.
  */
-public class DiagramTreeView extends TreeView<String> {
+public class DiagramTreeView extends TreeView<Rectangle> {
 
     private boolean expanded = false;
     private ContextMenu menu;
-    private TreeItem<String> itemSel = null;
+    private TreeItem<Rectangle> itemSel = null;
 
     public DiagramTreeView(){
-        init();
-    }
-    public DiagramTreeView(TreeItem root){
-        super(root);
         init();
     }
 
@@ -29,11 +37,18 @@ public class DiagramTreeView extends TreeView<String> {
 
         rename.setOnAction(a -> edit(itemSel));
         proper.setOnAction(a -> {});
-        decompose.setOnAction(a -> {});
+        decompose.setOnAction(a -> {
+            try {
+                Dialogs.decomposeElement(itemSel.getValue());
+            } catch (IOException e) {
+                e.printStackTrace(); // write LOG
+            }
+        });
         delete.setOnAction(a -> itemSel.getParent().getChildren().remove(itemSel));
 
         setCellFactory(p -> new DiagramTreeCell());
         rootProperty().addListener((ob, ov, nv) -> {
+            if(nv == null) return;
             nv.setExpanded(expanded);
             nv.getChildren().addListener(this::updateExpanded);
         });
@@ -42,6 +57,7 @@ public class DiagramTreeView extends TreeView<String> {
             menu.show(this, e.getScreenX(), e.getScreenY());
         });
     }
+
 
     private void updateExpanded(ListChangeListener.Change<? extends TreeItem> c){
         while(c.next())
@@ -58,6 +74,7 @@ public class DiagramTreeView extends TreeView<String> {
     public boolean getExpanded(){
         return expanded;
     }
+
 
 
 

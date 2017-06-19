@@ -5,6 +5,8 @@ import com.funtik.mbp.annotacion.AddProperty;
 import com.funtik.mbp.gui.Dialogs;
 import com.funtik.mbp.util.xml.XmlData;
 import com.funtik.mbp.util.xml.XmlWorker;
+import com.sun.javafx.collections.ObservableListWrapper;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -27,18 +29,23 @@ public class Project extends PropertiesBase<Project> {
     @AddProperty(name="Diagram", type = Diagram.class, XmlData = Type.CONTENT)
     private SimpleObjectProperty<Diagram> diagram;
 
-    @AddProperty(name="costs", isCreate = false, type = ArrayList.class, XmlData = Type.CONTENT )
-    private ObservableList costs = FXCollections.observableArrayList();
+    @AddProperty(name="costsCenter", type=ObservableListWrapper.class, XmlData=Type.CONTENT, isCreate=false)
+    private SimpleListProperty<Cost> costsCenter;
+
+
+    public Project(){
+        super(false);
+        costsCenter = new SimpleListProperty<>(FXCollections.observableArrayList());
+        buildMap(this);
+    }
 
     private File file;
     private boolean isEdit = false;
 
     public boolean Save() throws IOException {
         if(file == null) file = Dialogs.getFileChooser().showSaveDialog(Main.getStage());
-        System.out.println(file.getAbsoluteFile());
-        if(!file.getName().endsWith(".fxml"))
+        if(!file.getName().endsWith(".fbpm"))
             file = new File(file.getAbsoluteFile()+".fbpm");
-        System.out.println(file.getAbsoluteFile());
         return XmlWorker.saveProject(this);
     }
 

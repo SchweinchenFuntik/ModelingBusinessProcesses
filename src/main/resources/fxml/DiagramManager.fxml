@@ -10,7 +10,7 @@
 
 <BorderPane fx:id="manager"
             xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="com.funtik.mbp.controller.DiagramMeneger">
+            fx:controller="com.funtik.mbp.controller.DiagramManager">
     <fx:define>
         <ToggleGroup fx:id="rgGp1"/>
         <VBox fx:id="left" spacing="5">

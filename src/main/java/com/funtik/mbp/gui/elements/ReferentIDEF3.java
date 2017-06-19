@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 public class ReferentIDEF3 extends Rectangle{
     protected HBox bottomPane;
     public ReferentIDEF3(){
+        super(false);
         bottomPane = new HBox();
         bottomPane.prefWidthProperty().bind(prefWidthProperty());
         bottomPane.setPrefHeight(20);
@@ -19,6 +20,5 @@ public class ReferentIDEF3 extends Rectangle{
         AnchorPane.setLeftAnchor(bottomPane, 0d);
 
         getChildren().add(bottomPane);
-        getChildren().remove(idPane);
     }
 }

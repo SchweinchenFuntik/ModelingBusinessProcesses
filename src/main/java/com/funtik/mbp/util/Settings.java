@@ -15,8 +15,10 @@ public class Settings {
     public HashMap<String, WorkSpace> workSpaces = new HashMap<>();
 
     public Settings(){
-        project.addListener((ob, ov, nv) -> {
+    }
 
-        });
+    public static boolean isRegion(double x, double y, double lx, double ly, double w, double h){
+        double tx = lx + w, ty = ly + h;
+        return x >= lx && x <= tx && y >= ly && y <= ty;
     }
 }

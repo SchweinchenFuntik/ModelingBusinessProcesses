@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 /**
  * Created by funtik on 26.03.17.
  */
-public class DiagramMeneger implements Initializable{
+public class DiagramManager implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

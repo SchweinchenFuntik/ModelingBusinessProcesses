@@ -39,12 +39,12 @@ public class LineElement extends RegionRotate {
     public LineElement(double begX, double begY, double endX, double endY){
         Line line = new Line();
         init(begX, begY, endX, endY, 8, line);
-        line.strokeWidthProperty().bind(widthLine);
+      //  line.strokeWidthProperty().bind(widthLine);
         line.layoutXProperty().bind(Bindings.divide(widthRegion, 2));
-        line.endYProperty().bind(Bindings.subtract(heightProperty(), 2));
+        line.endYProperty().bind(Bindings.subtract(heightProperty(), 1));
         beg = new Point(this.begX, this.begY);
         end = new Point(this.endX, this.endY);
-        shell = new FocusShellElement(this, beg, end);
+        //shell = new FocusShellElement(null, beg, end);
 
         beg.addEventFilter(MouseEvent.MOUSE_PRESSED, eP);
         beg.addEventFilter(MouseEvent.MOUSE_DRAGGED, eD);

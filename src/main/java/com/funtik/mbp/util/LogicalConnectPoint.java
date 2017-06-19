@@ -1,4 +1,4 @@
-package com.funtik.mbp.util.elements;
+package com.funtik.mbp.util;
 
 import com.funtik.mbp.element.ConnectPoint;
 import javafx.beans.property.DoubleProperty;

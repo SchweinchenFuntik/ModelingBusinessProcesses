@@ -14,7 +14,6 @@
     <top>
         <VBox fx:id="top">
             <fx:include source="Menu.fxml" />
-            <!--<fx:include source="ToolBar.fxml" />-->
         </VBox>
     </top>
 
@@ -22,9 +21,7 @@
         <SplitPane dividerPositions="0.17, 0.73, 0.1">
 
             <DiagramTreeView editable="true" expanded="true" fx:id="diagrams"/>
-            <ScrollPane fx:id="scroll">
-                <WorkSpace fx:id="workSpace" />
-            </ScrollPane>
+            <ScrollPane fx:id="scroll"/>
             <MinimalPropertySheet modeSwitcherVisible="false" fx:id="property"/>
 
         </SplitPane>

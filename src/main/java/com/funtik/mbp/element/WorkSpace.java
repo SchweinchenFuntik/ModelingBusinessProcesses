@@ -6,6 +6,8 @@ import com.funtik.mbp.model.Diagram;
 import com.funtik.mbp.model.Project;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -19,26 +21,28 @@ import java.util.List;
  * Created by funtik on 20.04.17.
  */
 public class WorkSpace extends Pane {
-    private Diagram diagram;
+    private ObjectProperty<Diagram> diagram = new SimpleObjectProperty<>();
     private final ObservableList<Element> focus = FXCollections.observableArrayList();
     private final ObservableList<Element> elements;
 
     private EventManager eventManager;
 
-    public WorkSpace(){
-        setPrefSize(700, 700);
-        eventManager = new EventManager();
-        elements = FXCollections.observableArrayList();
-        addEventFilter(MouseEvent.MOUSE_CLICKED, this::focusElement);
-        elements.addListener(this::updateElement);
-    }
+//    public WorkSpace(){
+//        setPrefSize(700, 700);
+//        eventManager = new EventManager();
+//        elements = FXCollections.observableArrayList();
+//        addEventFilter(MouseEvent.MOUSE_CLICKED, this::focusElement);
+//        elements.addListener(this::updateElement);
+//    }
 
     public WorkSpace(Diagram diagram){
-        setPrefSize(700, 700);
+        setPrefSize(2000, 2000);
+        this.diagram.setValue(diagram);
         eventManager = new EventManager();
         elements = FXCollections.observableArrayList();
         addEventFilter(MouseEvent.MOUSE_CLICKED, this::focusElement);
         elements.addListener(this::updateElement);
+        ((List<Element>)diagram.getValue("elements")).forEach(el -> addElement(el));
     }
 
     public EventManager getEventManager(){
@@ -65,15 +69,15 @@ public class WorkSpace extends Pane {
         }
     }
 
-    // ?????
-    public void openProject(Project project){}
-
-    public void setDiagram(Diagram d){
-
+    public void addElement(Element el){
+        elements.add(el);
+    }
+    public void addElementAll(Element... els){
+        elements.addAll(els);
     }
 
     public Diagram getDiagram() {
-        return diagram;
+        return diagram.get();
     }
 
     public List<Element> getElements() {

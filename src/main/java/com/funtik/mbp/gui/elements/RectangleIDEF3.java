@@ -10,8 +10,8 @@ import javafx.scene.layout.StackPane;
  * Created by funtik on 15.06.17.
  */
 public class RectangleIDEF3 extends Rectangle {
-
-    StackPane bottomLeft, bottomRigth;
+    private static int ID = 0;
+    private StackPane bottomLeft, bottomRigth;
 
     public RectangleIDEF3(){
         AnchorPane.setBottomAnchor(idPane, -2d);
@@ -31,6 +31,9 @@ public class RectangleIDEF3 extends Rectangle {
         bottomPane.setPrefHeight(20);
         AnchorPane.setBottomAnchor(bottomPane, 0d);
         AnchorPane.setLeftAnchor(bottomPane, 0d);
+        AnchorPane.setTopAnchor(costPane, 1d);
+        AnchorPane.setLeftAnchor(costPane, 1d);
+        id.setValue(ID++);
         getChildren().add(bottomPane);
     }
 }

@@ -7,7 +7,6 @@ import com.funtik.mbp.util.ref.ClassRef;
 import com.funtik.mbp.util.xml.XmlData;
 import javafx.beans.property.*;
 import javafx.util.StringConverter;
-
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -115,6 +114,7 @@ public abstract class PropertiesBase<T> implements Properties, XmlData<T> {
     }
 
     public PropertiesBase() { buildMap(this); }
+    public PropertiesBase(boolean b) { }
 
     @Override
     public List<String> getAttributes(){
@@ -133,9 +133,9 @@ public abstract class PropertiesBase<T> implements Properties, XmlData<T> {
     }
 
     @Override
-    public Object getValueContent(String content) {
+    public T getValueContent(String content) {
         Property p = properties.get(content);
-        return p == null ? null:p.getValue();
+        return p == null ? null:(T)p.getValue();
     }
 
     @Override

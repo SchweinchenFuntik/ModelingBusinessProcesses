@@ -41,9 +41,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-//        Project p = new Project();
-       // XmlWorker.createXml(p);//
-        Parent parent = t();//PaneTool.loadPane("Window", "local");//t();
+        Parent parent = PaneTool.loadPane("Window", "local");
         Scene scene = new Scene(parent, 700, 600);
         scene.getStylesheets().add("styles/style.css");
         stage.setScene(scene);
@@ -60,45 +58,8 @@ public class Main extends Application {
     boolean focus = false;
 
     private Pane t(){
-        WorkSpace pane = new WorkSpace();
+        WorkSpace pane = new WorkSpace(null);
 
-        //RectangleVBox rvb0 = new RectangleVBox();
-       // rvb0.setElementX(100);
-        //rvb0.setElementY(150);
-
-//        Rec r = new Rec();
-//        r.setElementX(100);
-//        r.setElementY(200);
-//        r.setElementWidth(150);
-//        r.setElementHeight(250);
-
-        //r.setElementX(50);
-        //r.setElementY(50);
-
-//        pane.setOnMousePressed(e -> {
-//            Element el = getChildPoint(pane, e.getX(), e.getY());
-//            if(el == null) return;
-//            dx = e.getX()-el.getElementX(); dy = e.getY()-el.getElementY();
-//            System.out.println();
-//        });
-//
-//        pane.setOnMouseDragged(e -> {
-//            Element el = getChildPoint(pane, e.getX(), e.getY());
-//            if(null==el) return;
-//            el.setElementX(e.getX()-dx);
-//            el.setElementY(e.getY()-dy);
-//        });
-
-        EventHandler<MouseEvent> evFocus = e -> {
-            Object o = e.getSource();
-            if(o instanceof WorkSpace){
-                WorkSpace wp = (WorkSpace) o;
-                wp.getElements().forEach(el -> el.focusNot());
-            } else if(o instanceof Element) {
-                Element el = (Element) o;
-                el.focus();
-            }
-        };
 
         LogicalElement and = LogicalElement.createLogicalElement(LogicalElement.Operators.AND);
         and.setElementX(75);
@@ -140,12 +101,15 @@ public class Main extends Application {
 //        and_a.addEventFilter(MouseEvent.MOUSE_CLICKED, evFocus);
 //        and.addEventFilter(MouseEvent.MOUSE_CLICKED, evFocus);
 
-        pane.getElements().add(and);
-        pane.getElements().add(or);
-        pane.getElements().add(xor);
-        pane.getElements().add(and_a);
-        pane.getElements().add(or_a);
-        pane.getElements().add(rec);
+//        pane.getElements().add(and);
+//        pane.getElements().add(or);
+//        pane.getElements().add(xor);
+//        pane.getElements().add(and_a);
+//        pane.getElements().add(or_a);
+
+
+
+        and.setApplyDirection(true);
 
 
 
@@ -153,41 +117,67 @@ public class Main extends Application {
                                     .setElements(null, null)
                                     .moveToArrow(50, 50, 300, 200)
                                     .build();
-//        pane.getChildren().addAll(arrow);
-//        pane.getChildren().addAll(new ArrowLine(100, 100, 100, 300));
+
+
+       // pane.getChildren().addAll(arrow);
+
+        RectangleDFD r1 = new RectangleDFD();
+        RectangleDFD r2 = new RectangleDFD();
+
+        r1.setLayoutX(50);
+        r1.setLayoutY(50);
+        r2.setLayoutX(250);
+        r2.setLayoutY(200);
+        r1.setElementWidth(200);
+        r2.setElementWidth(300);
+        r1.setElementHeight(70);
+        r2.setElementHeight(70);
+
+//        pane.getElements().add(r1);
+//        pane.getElements().add(r2);
+
+        r2.setApplyDirection(true);
+
+        RectangleIDEF0 r = new RectangleIDEF0();
+        r.setElementWidth(200);
+        r.setElementHeight(100);
+        r.setElementX(300);
+        r.setElementY(300);
+
+        RectangleIDEF3 idef3 = new RectangleIDEF3();
+        idef3.setElementWidth(200);
+        idef3.setElementHeight(100);
+        idef3.setElementX(50);
+        idef3.setElementY(50);
+
+        DataStoreDFD data = new DataStoreDFD();
+        data.setElementWidth(200);
+        data.setElementHeight(100);
+        data.setElementX(50);
+        data.setElementY(50);
+
+        ExternalReferenceDFD referenceDFD = new ExternalReferenceDFD();
+        referenceDFD.setElementWidth(200);
+        referenceDFD.setElementHeight(100);
+        referenceDFD.setElementX(50);
+        referenceDFD.setElementY(50);
+
+
+        ReferentIDEF3 referentIDEF3 = new ReferentIDEF3();
+        referentIDEF3.setElementWidth(200);
+        referentIDEF3.setElementHeight(100);
+        referentIDEF3.setElementX(50);
+        referentIDEF3.setElementY(50);
+
+        r.setApplyDirection(true);
+        pane.getElements().add(r);
+        pane.getElements().add(idef3);
+//        pane.getElements().add(referentIDEF3);
 
 //
         return pane;
     }
 
-    /**
-     * Опрпеделяет есть ли обекты в данной точке
-     * @param pane
-     * @param x
-     * @param y
-     * @return
-     */
-    private ArrayList<Node> getChildRegion(Pane pane, double x, double y){
-        ArrayList<Node> ls = new ArrayList<>();
-        pane.getChildren().forEach(n -> {
-            Element e = (Element) n;
-            double lx = e.getElementX(), ly = e.getElementY(),
-                    w = e.getElementWidth(), h = e.getElementHeight();
-            if(lx<=x && w+lx>=x && ly<=y && h+ly>=y) ls.add(n);
-        });
-        return ls;
-    }
-
-    private Node getChildRegion(WorkSpace pane, double x, double y){
-        ObservableList<Node> ls = pane.getChildren();
-        for(int i=ls.size()-1; i>-1; i++) {
-            Element e = (Element) ls.get(i);
-            double lx = e.getElementX(), ly = e.getElementY(),
-                    w = e.getElementWidth(), h = e.getElementHeight();
-            if(lx<=x && w+lx>=x && ly<=y && h+ly>=y) return (Node) e;
-        }
-        return null;
-    }
 
     public static Settings getSettings(){
         return settings;

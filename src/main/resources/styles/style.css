@@ -11,21 +11,15 @@
     -fx-border-width: 2;
 }
 
-.rectangleDFD{
-    -fx-border-color: black;
-    -fx-border-width: 2;
-    -fx-border-radius: 10;
+
+.textElement{
+   -fx-border-color: black;
+   -fx-border-width: 2;
 }
 
-.rectangle {
-    -fx-border-color: black;
-    -fx-border-width: 2;
-    -fx-padding: 5;
-}
 
-.rectangle:hover{
-    -fx-border-color: green;
-}
+
+
 
 .pointLeftTop:hover{
     -fx-cursor: nw-resize;
@@ -40,10 +34,9 @@
     -fx-cursor: se-resize;
 }
 
-.arrow_point{
-    -fx-border-color: black;
-    -fx-border-width: 1;
-}
+
+
+
 
 .cell-rectangle .text-area:focused .content {
     -fx-background-color:
@@ -61,28 +54,5 @@
 
 .cell-rectangle .text-area .scroll-bar:vertical:disabled {
     -fx-opacity: 0;
-}
-
-
-
-
-
-
-
-
-
-.t2:hover{
-    -fx-fill: -fx-focus-color;
-}
-
-.t2{
-    -fx-fill: -fx-background;
-}
-
-
-.t{
-
-    -fx-border-color: black;
-    -fx-border-width: 1
 }
 

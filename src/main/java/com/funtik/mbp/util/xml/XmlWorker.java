@@ -1,11 +1,11 @@
 package com.funtik.mbp.util.xml;
 
-import com.funtik.mbp.element.ConnectPoint;
 import com.funtik.mbp.element.Element;
 import com.funtik.mbp.model.ElementModel;
 import com.funtik.mbp.model.Project;
 import com.funtik.mbp.model.Properties;
 import com.funtik.mbp.util.Converters;
+import com.funtik.mbp.util.functions.Func;
 import com.funtik.mbp.util.ref.ClassRef;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
@@ -13,12 +13,11 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by funtik on 08.05.17.
@@ -41,42 +40,33 @@ public class XmlWorker {
             Class clazz = data.getClass(el.getName());
             if(ClassRef.isInterface2(clazz, XmlData.class)) {
                 if(!ClassRef.isInterface2(clazz, Properties.class)){  continue; /* #пишем_в_лог*/ } // ??????
-
                 XmlData elData = (XmlData) ClassRef.createObject(clazz);
                 loadElement(el, elData);
                 data.setValueContent(el.getName(), elData);
             } else if(ClassRef.isInterface2(clazz, Element.class)){
                 ElementModel model = ElementModel.getElementModel(clazz, null);
                 if(model == null){  continue; /* #пишем_в_лог*/ }
-            } else if(ClassRef.isInterface2(clazz, ConnectPoint.class)){
-                //////////////////s///////
-            } else if(ClassRef.isInterface2(clazz, Collection.class)){
+            }  else if(ClassRef.isInterface2(clazz, Collection.class)){
                 Object v = data.getValueContent(el.getName());
-                System.out.println(v);
-                for(org.jdom2.Element e:el.getChildren()){
-
-                    loadOthers(Converters.getClass(e.getName()), e).getObject();
-                }
-
+                for(org.jdom2.Element e:el.getChildren())
+                    loadOthers(Converters.getClass(e.getName()), e, v);
             }
         }
         return true;
     }
 
-    private static void addCollection(XmlData data, Class clazz){
-
-    }
-
-    private static XmlData loadOthers(Class clazz, org.jdom2.Element el){
-        if(ClassRef.isInterface(clazz, XmlData.class)){
+    private static void loadOthers(Class clazz, org.jdom2.Element el, Object val){
+        Consumer func;
+        if(val instanceof List) func = o -> ((List)val).add(o);
+        else return;
+        if(ClassRef.isInterface2(clazz, XmlData.class)){
             XmlData data = (XmlData) ClassRef.createObject(clazz);
             loadElement(el, data);
-            System.out.println(data);
-            return data;
+            func.accept(data);
         } else {
             XmlData m = Converters.getXmlDataElement(clazz);
             loadElement(el, m);
-            return m;
+            func.accept(el);
         }
     }
 

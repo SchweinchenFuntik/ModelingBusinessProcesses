@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.funtik.mbp.controller.Decompose">
+<?import jfxtras.scene.control.ToggleGroupValue?>
+<VBox xmlns="http://javafx.com/javafx/8.0.112"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="5"
+      fx:controller="com.funtik.mbp.controller.Decompose">
 
     <fx:define>
-        <ToggleGroup fx:id="rgGp1"/>
+        <ToggleGroupValue fx:id="groups" />
     </fx:define>
 
-    <HBox>
-        <Label text="К-во елеентов:"/>
-        <
+    <HBox spacing="10">
+        <Label text="К-во елеентов:" />
+        <Spinner styleClass="STYLE_CLASS_ARROWS_ON_RIGHT_HORIZONTAL"
+                 editable="true" onScroll="#scroll" fx:id="amountElement"/>
     </HBox>
 
-    <Label text="Тип модели:"/>
+    <Label text="Тип модели:" />
 
-    <HBox>
-        <RadioButton    mnemonicParsing="false"
-                        selected="true"
-                        text="%diagram.type.idef0"
-                        toggleGroup="$rgGp1"
-                        fx:id="rbIDEF0"/>
-
-        <RadioButton    mnemonicParsing="false"
-                        selected="false"
-                        text="%diagram.type.dfd"
-                        toggleGroup="$rgGp1"
-                        fx:id="rbDFD"/>
-
-        <RadioButton    mnemonicParsing="false"
-                        selected="false"
-                        text="%diagram.type.idef3"
-                        toggleGroup="$rgGp1"
-                        fx:id="rbIDEF3"/>
+    <HBox spacing="10">
+        <RadioButton fx:id="rbIDEF0"
+                     mnemonicParsing="false"
+                     selected="true"
+                     text="IDEF0"/>
+        <RadioButton fx:id="rbDFD"
+                     mnemonicParsing="false"
+                     selected="false"
+                     text="DFD"/>
+        <RadioButton fx:id="rbIDEF3"
+                     mnemonicParsing="false"
+                     selected="false"
+                     text="IDEF3"/>
     </HBox>
+
 </VBox>

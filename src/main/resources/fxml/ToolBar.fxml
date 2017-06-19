@@ -5,21 +5,24 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import jfxtras.labs.scene.control.BigDecimalField?>
 <?import java.text.NumberFormat?>
+<?import jfxtras.scene.control.ToggleGroupValue?>
+
 
 <FlowPane xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.funtik.mbp.controller.ToolBar">
 
     <fx:define>
+        <ToggleGroupValue fx:id="groups" />
+        <ToggleButton text="Arrow" fx:id="arrow"/>
+        <ToggleButton text="Squiggling" fx:id="squiggling"/>
+        <ToggleButton text="Rectangle" fx:id="rectangleIDEF0"/>
+        <ToggleButton text="Rectangle" fx:id="rectangleIDEF3"/>
+        <ToggleButton text="Rectangle" fx:id="rectangleDFD"/>
+        <ToggleButton text="Ext.Refer." fx:id="ExternalReferenceDFD"/>
+        <ToggleButton text="DataStore" fx:id="DataStoreDFD"/>
+        <ToggleButton text="Referent" fx:id="ReferentIDEF3"/>
     </fx:define>
-    
-    <ToolBar fx:id="barPrimitive">
-        <ToggleButton fx:id="def"/>
-        <ToggleButton fx:id="arrow"/>
-        <ToggleButton fx:id="rectengle"/>
-        <ToggleButton text="def"/>
-    </ToolBar>
-    
-    <Separator  orientation="VERTICAL"/>
+
     
     <ToolBar>
         <Label text="%tool_bar.zoom" />
@@ -29,5 +32,9 @@
             <format> <NumberFormat fx:factory="getPercentInstance"/> </format>
         </BigDecimalField>
     </ToolBar>
+
+    <Separator  orientation="VERTICAL"/>
+
+    <ToolBar fx:id="barPrimitive"/>
     
 </FlowPane>

@@ -18,10 +18,9 @@ import java.lang.reflect.Field;
  * от него наследоватся в елементах
  */
 public class ElementModel extends PropertiesBase<Element> {
-
-    @AddProperty(name="id")
-    private SimpleIntegerProperty id;// ??подумать нужен ли он, нам нужно будет вносить изменения,
-    // также возможно добавить к Diagram?
+//    @AddProperty(name="id")
+//    private SimpleIntegerProperty id;// ??подумать нужен ли он, нам нужно будет вносить изменения,
+//    // также возможно добавить к Diagram?
 
     @AddProperty(name="elementX")
     private SimpleDoubleProperty elementX;

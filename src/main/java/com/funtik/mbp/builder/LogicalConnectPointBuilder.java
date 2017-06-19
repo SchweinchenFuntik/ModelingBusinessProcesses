@@ -1,6 +1,6 @@
 package com.funtik.mbp.builder;
 
-import com.funtik.mbp.util.elements.LogicalConnectPoint;
+import com.funtik.mbp.util.LogicalConnectPoint;
 import javafx.util.Builder;
 
 import java.util.function.Function;
