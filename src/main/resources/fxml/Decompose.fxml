@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.funtik.mbp.controller.Decompose">
+
+    <fx:define>
+        <ToggleGroup fx:id="rgGp1"/>
+    </fx:define>
+
+    <HBox>
+        <Label text="К-во елеентов:"/>
+        <
+    </HBox>
+
+    <Label text="Тип модели:"/>
+
+    <HBox>
+        <RadioButton    mnemonicParsing="false"
+                        selected="true"
+                        text="%diagram.type.idef0"
+                        toggleGroup="$rgGp1"
+                        fx:id="rbIDEF0"/>
+
+        <RadioButton    mnemonicParsing="false"
+                        selected="false"
+                        text="%diagram.type.dfd"
+                        toggleGroup="$rgGp1"
+                        fx:id="rbDFD"/>
+
+        <RadioButton    mnemonicParsing="false"
+                        selected="false"
+                        text="%diagram.type.idef3"
+                        toggleGroup="$rgGp1"
+                        fx:id="rbIDEF3"/>
+    </HBox>
+</VBox>
